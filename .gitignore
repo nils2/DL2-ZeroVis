@@ -1,0 +1,6 @@
+.DS_Store
+*.pyc
+__pycache__
+fromage_main/
+benchmark/
+.ipynb_checkpoints/
