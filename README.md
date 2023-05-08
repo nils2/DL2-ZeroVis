@@ -4,6 +4,7 @@
 
 - Place the Visual Relations benchmark dataset as a folder benchmark.
 In here change the images in the leaders folder that have spaces to _ (eg. angela_merkel).
+Also correct the name washignton in cities to washington.
 
 - Install the environment file as a conda environment.
 
