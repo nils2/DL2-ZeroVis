@@ -271,6 +271,8 @@ class Fromage(nn.Module):
         text_embs = self.model.input_embeddings(text_ids)  # (1, T, D)
         input_embs.append(text_embs)
         input_ids.append(text_ids)
+      elif type(p) == torch.Tensor:
+        input_embs.append(p.to(device=self.model.logit_scale.device, dtype=self.model.logit_scale.dtype))
       else:
         raise ValueError(f'Input prompts should be either PIL.Image.Image or str types, got {type(p)} instead.')
 
