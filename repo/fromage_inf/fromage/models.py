@@ -16,7 +16,7 @@ from PIL import Image, UnidentifiedImageError
 
 from transformers import OPTForCausalLM, GPT2Tokenizer
 
-from fromage import utils
+from . import utils
 
 class FrozenArgs:
   freeze_lm: bool = True
@@ -204,12 +204,9 @@ class Fromage(nn.Module):
                path_array: Optional[List[str]] = None, emb_matrix: Optional[torch.tensor] = None):
     super().__init__()
     self.model = FromageModel(tokenizer, model_args)
-
-    # import sys
-    # sys.path.append('../../')
-
+    
     # Added precomputed visual embeddings.
-    self.visual_embs = torch.load("./fromage_model/visual_embs.pt")
+    self.visual_embs = torch.load("./fromage_inf/fromage_model/visual_embs.pt")
     self.path_array = path_array
     self.emb_matrix = emb_matrix
 

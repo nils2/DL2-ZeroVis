@@ -1,7 +1,10 @@
 .DS_Store
 *.pyc
 __pycache__
-fromage_main/
-benchmark/
+repo/fromage_main/
+repo/benchmark/
 .ipynb_checkpoints/
-fromage_inf/fromage_model/cc3m_embeddings.pkl
+repo/fromage_inf/fromage_model/cc3m_embeddings.pkl
+repo/fromage_inf/__pycache__
+repo/fromage_inf/.ipynb_checkpoints/
+
