@@ -1,8 +1,8 @@
 # DL2-ZeroVis
 
-- Place the [cc3m_embeddings](https://drive.google.com/file/d/1wMojZNqEwApNlsCZVvSgQVtZLgbeLoKi/view) in the "repo/fromage_inf/fromage_model" folder as done in [fromage](https://github.com/kohjingyu/fromage).
+- Place the [cc3m_embeddings](https://drive.google.com/file/d/1wMojZNqEwApNlsCZVvSgQVtZLgbeLoKi/view) in the "src/fromage_inf/fromage_model" folder as done in [fromage](https://github.com/kohjingyu/fromage).
 
-- Place the [Visual Relations benchmark](https://drive.google.com/file/d/1hf5_zPI3hfMLNMTllZtWXcjf6ZoSTGcI/edit) dataset, from the [ZeroCap](https://github.com/YoadTew/zero-shot-image-to-text) paper, as a folder "benchmark" in directory "repo".
+- Place the [Visual Relations benchmark](https://drive.google.com/file/d/1hf5_zPI3hfMLNMTllZtWXcjf6ZoSTGcI/edit) dataset, from the [ZeroCap](https://github.com/YoadTew/zero-shot-image-to-text) paper, as a folder "benchmark" in directory "src".
 In here change the images in the leaders folder that have spaces to _ (eg. angela_merkel).
 Also correct the name washignton in cities to washington.
 

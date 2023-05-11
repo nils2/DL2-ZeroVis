@@ -206,7 +206,7 @@ class Fromage(nn.Module):
     self.model = FromageModel(tokenizer, model_args)
     
     # Added precomputed visual embeddings.
-    self.visual_embs = torch.load("./fromage_inf/fromage_model/visual_embs.pt")
+    self.visual_embs = torch.load("../src/fromage_inf/fromage_model/visual_embs.pt")
     self.path_array = path_array
     self.emb_matrix = emb_matrix
 
