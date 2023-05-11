@@ -327,15 +327,19 @@ class Fromage(nn.Module):
         for seen_idx in seen_image_idx:
           scores[seen_idx, :] -= 1000
 
+        # The following code was adapted to fit the task and 
+        # prevent the model from throwing errors due to a limit of working urls.
+
         # Get the top max_img_per_ret + 3 (in case some fail) images for each image.
-        _, top_image_idx = scores.squeeze().topk(max_img_per_ret + 3)
+        _, top_image_idx = scores.squeeze().topk(max_img_per_ret + 50)
+
         image_outputs = []
-        for img_idx in top_image_idx:
+        for k, img_idx in enumerate(top_image_idx):
           # Find the first image that does not error out.
           try:
             seen_image_idx.append(img_idx)
             img = utils.get_image_from_url(self.path_array[img_idx])
-            image_outputs.append(img)
+            image_outputs.append([img, k])
             if len(image_outputs) == max_img_per_ret:
               break
           except UnidentifiedImageError:
