@@ -27,8 +27,8 @@ class PromptParser:
         # Get input prompts and retrieved images
         prompt, pred, str_gt, gt = self.predict(data, max_img_per_ret=max_img_per_ret)
 
-        # print("Input conversation:")
-        # self.display(prompt, root=root)
+        print("Input conversation:")
+        self.display(prompt, root=root)
 
         print(f"Expectation: {str_gt[0].replace(' [RET]', '')}")
         self.display(gt, root=root)
