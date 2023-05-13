@@ -6,7 +6,7 @@ import numpy as np
 if "./" not in sys.path:
     sys.path.append("./")
 
-from fromage_inf.fromage import models
+from ..fromage import models
 import matplotlib.pyplot as plt
 
 from typing import Union, Tuple
@@ -14,11 +14,13 @@ from typing import Union, Tuple
 
 class PromptParser:
 
-    def __init__(self, model_dir: str, visual_emb_path: str = "./fromage_model/visual_embs.pt"):
+    def __init__(self,
+                 model_dir: str,
+                 visual_emb_path: str = "src/fromage_inf/fromage_model/visual_embs.pt"):
         # Load model
         self.model = models.load_fromage(model_dir, visual_emb_path)
 
-    def __call__(self, data: Union[dict, str], root: str = "../", max_img_per_ret: int = 3):
+    def __call__(self, data: Union[dict, str], root: str = "./", max_img_per_ret: int = 3):
         """Predict data and display results in jupyter cell"""
 
         if isinstance(data, str):
@@ -114,9 +116,9 @@ class PromptParser:
     # Display
     # =====================================================================
 
-    def display(self, model_outputs, root="../"):
+    def display(self, model_outputs, root="./"):
         """Display conversation"""
-        root = os.path.join(root, "benchmark")
+        root = os.path.join(root, "src/benchmark")
 
         for output in model_outputs:
 

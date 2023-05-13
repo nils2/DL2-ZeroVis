@@ -243,7 +243,7 @@ class Fromage(nn.Module):
                  model_args: Optional[FrozenArgs] = None,
                  path_array: Optional[List[str]] = None,
                  emb_matrix: Optional[torch.tensor] = None,
-                 visual_embs: Optional[str] = "./fromage_model/visual_embs.pt"):
+                 visual_embs: Optional[str] = "./src/fromage_inf/fromage_model/visual_embs.pt"):
         super().__init__()
         self.model = FromageModel(tokenizer, model_args)
 
@@ -427,8 +427,9 @@ class Fromage(nn.Module):
         return return_outputs
 
 
-def load_fromage(model_dir: str,
-                 visual_emb_path: str = "./fromage_model/visual_embs.pt") -> Fromage:
+def load_fromage(
+        model_dir: str,
+        visual_emb_path: str = "../src/fromage_inf/fromage_model/visual_embs.pt") -> Fromage:
     model_args_path = os.path.join(model_dir, 'model_args.json')
     model_ckpt_path = os.path.join(model_dir, 'pretrained_ckpt.pth.tar')
     embs_paths = [s for s in glob.glob(os.path.join(model_dir, 'cc3m_embeddings*.pkl'))]
