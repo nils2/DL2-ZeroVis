@@ -1,4 +1,6 @@
-# Introduction
+# Title here
+
+## Introduction
 
 Breakthroughs in language modelling and computer vision have paved the way for remarkable advancements in the field of artificial intelligence (AI) in the last decade. These developments have been combined in recent years to propose models which operate across the modality boundary. A special interest has been paid to vision-language models, for which multiple architectures and model combinations have been proposed. A promising and efficient way to work across vision and language seems to be to map a frozen vision model to a frozen large language model (LMM), by training a linear translation layer.
 
@@ -7,7 +9,7 @@ The vision-language domain consists of many tasks, one of the most known and bes
 > "Who is the president of Germany?"\
 > X = image(Obama) - image(USA) + image(Germany) &rarr; "Angela Merkel"
 
-## Related work
+### Related work
 
 In **ZeroCap**, /Tewel 2022/ describe their success in applying arithmetic operations to the visual embeddings "to generate knowledge of the external world". Furthermore, they extend their approach beyond the visual domain and manage to do calculations over a combination of visual and textual inputs by performing these operations in the latent embedding space. However, as they use CLIP (/cite/), a model that can handle visual and textual inputs but only generates textual outputs, their arithmetics are limited to output in natural language:
 
@@ -29,11 +31,11 @@ To our knowledge, no research has been published which investigates real-world k
 
 Recent research on the workings of LLMs by (/Wei et al. 2023/) has shown that using **chain-of-thought** (CoT) reasoning with these models can enable them to tackle complex arithmetic, commonsense and symbolic reasoning tasks. They show that standard prompting only provides a lower bound on the capabilities of LLMs, and that CoT prompting can improve performance.
 
-## Exposition
+### Exposition
 
-The paper delineates several key characteristics of the proposed model. First, it effectively leverages the capabilities of existing language models, including in-context learning and free-form text generation. Which allows the model to capitalize on the comprehensive knowledge encapsulated in these language models, thereby enhancing both the efficacy and efficiency of the system. Second, the model exhibits adaptness in managing cross-modal interactions, facilitating the processing of arbitrarily interleaved image and text inputs to generate coherent free-form text integrated with retrieved images. This versatility endows the model with indispensable multimodal dialogue capabilities, suitable for real-world scenarios requiring diverse input types. Finally, the model demonstrates robust zero-shot performance on grounded tasks like contextual image retrieval and multimodal dialogue, indicating a potent ability to generalize from learned concepts to new tasks without explicit task-specific training.
+The paper by Koh et al. ([2023](https://doi.org/10.48550/arXiv.2301.13823)) delineates several key characteristics of the proposed model. First, it effectively leverages the capabilities of existing language models, including in-context learning and free-form text generation. Additionally, the model can capitalize on the comprehensive knowledge encapsulated in these language models, thereby enhancing both the efficacy and efficiency of the system. Second, the model exhibits adaptness in managing cross-modal interactions, facilitating the processing of arbitrarily interleaved image and text inputs to generate coherent free-form text integrated with retrieved images. This versatility endows the model with indispensable multimodal dialogue capabilities, suitable for real-world scenarios requiring diverse input types. Finally, the model demonstrates robust zero-shot performance on grounded tasks like contextual image retrieval and multimodal dialogue, indicating a potent ability to generalize from learned concepts to new tasks without explicit task-specific training.
 
-Such attributes inspire intriguing inquiries about the model's performance in the visual domain. Specifically, can the model effectively execute zero-shot visual arithmetic? Does the inherent in-context learning capability of large language models facilitate this task? How does the performance alter when engaged in multimodal arithmetic operations? These questions gain prominence given its design, which retrieves rather than generates images from the Conceptual Captions dataset. This makes it vulnerable to biases in the training and retrieval datasets which could potentially impact performance and results.
+Such attributes inspire intriguing inquiries about the model's performance in the visual domain. Specifically, can the model effectively execute zero-shot visual arithmetic? Does the inherent in-context learning capability of large language models facilitate this task? How does the performance alter when engaged in multimodal arithmetic operations? These questions gain prominence given its design, which retrieves rather than generates images from the Conceptual Captions dataset. This makes it less vulnerable to biases in the training dataset, but more vulnerable to biases in the retrieval datasets which could potentially impact performance and results. Since 
 
 Our novel contributions include:
 
@@ -43,11 +45,34 @@ Our novel contributions include:
 
 - Demonstarting the influence of multimodal inputs on visual arithmetic. We furnish a deeper understanding of the interaction between different modalities in multimodal models, especially in tasks they are not trained on. The insights derived from this exploration bear significant implications for how multimodal models should be trained and utilized.
 
-# Results
+## Methodology
+
+The original implementation of the FROMAGe model is publicly available[^1], however for our experiments it performs a few unnecessary computations at inference. Consequently, we use the authors' code but chose to remove the CLIP decoder and precompute the visual embeddings of the images, through it and their pre-trained linnear mapping. Besides requiring less compute this approach has the additional benifit of needing only 12 GB VRAM and being able to run on a 3060 RTX series instead of a 3090 RTX series.
+
+### Visual relations benchmark
 
 
 
-# Conclude
+### Chain-of-Thought prompting
+
+
+
+### T-SNE
+
+In this study, we leverage t-Distributed Stochastic Neighbor Embedding (T-SNE), a non-linear dimensionality reduction technique that is particularly adept at preserving local structure within high-dimensional datasets. T-SNE calculates the similarity of data points in the high-dimensional space and then maps it to a lower-dimensional space. It uses gradient descent to minimizes the Kullback-Leibler (KL) divergence between the high and low-dimensional representations with respect to the locations of the points in the map. The output is a two- or three-dimensional representation of the data that can be easily visualized, preserving the structure and relationships inherent in the high-dimensional data space as much as possible. This dimensionality reduction algorithm is used to visualize nonlinear relations between the image embeddings, allowing for an better analysis of the retrieved tokens from the FROMAGe model.
+
+## Results
+
+(Designing prompts for this project is difficult as a lot of prompts that were attempted gave terrible results.)
+(Examples can be seen in [example](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/example.ipynb) and in [results](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/results.ipynb). In the latter there is also a ablation study available with T-SNE for the Visual Relations benchmark dataset used to perform the visual arithmetics.)
+
+## Discussion
+
+
+
+## Conclusion and Future Research
+
+(So far all we can conclude is that the task is very difficult and that the benchmark is not a very good one, as the paper it is from mentioned 320 relations (there are only about 39) and they mention in the paper the relation countries-> cities but this should be flags->cities as for example australia in australia->canberra only exists in flags)
 
 [comment]: <> (Technical limitations specific to FROMAGe:)
 [comment]: <> (- does not always generate \[RET\] during inference)
@@ -55,8 +80,10 @@ Our novel contributions include:
 [comment]: <> (Which are likely dou to its comprehensive pre-training regime (on text-only data).)
 [comment]: <> (Somewhat alleviated by specifically prompting the model to ask it to show images.)
 
-## Contributions
+### Contributions
 
 
 
-# References
+## References
+
+[^1]: https://github.com/kohjingyu/fromage/tree/main
