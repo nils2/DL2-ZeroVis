@@ -47,10 +47,11 @@ Our novel contributions include:
 
 ## Methodology
 
-The original implementation of the FROMAGe model is publicly available[^1], however for our experiments it performs a few unnecessary computations at inference. Consequently, we use the authors' code but chose to remove the CLIP decoder and precompute the visual embeddings of the images, through it and their pre-trained linnear mapping. Besides requiring less compute this approach has the additional benifit of needing only 12 GB VRAM and being able to run on a 3060 RTX series instead of a 3090 RTX series.
+For our study, we have utilized the publicly accessible original implementation of the FROMAGe model[^1], albeit with certain modifications tailored to our experimental needs. The original model performs several computations during inference that were deemed unnecessary for our purposes. As such, we made modifications to the authors' code, specifically by eliminating the CLIP decoder and precomputing the visual embeddings of the images using the decoder and their pretrained linear mapping. This approach not only reduces the computational demand but also has the additional advantage of lowering the VRAM requirement to 12GB, thus enabling the execution of the model on an NVIDIA GeForce RTX 3060 series GPU, as opposed to the more resource-intensive RTX 3090 series.
 
 ### Visual relations benchmark
 
+Introduced in **ZeroCap**, /Tewel 2022/ the Visual Relations benchmark encompasses 320 distinct relationships distributed among image templates, such as buildings&rarr;country, countries&rarr;capital, foods&rarr;country, leaders&rarr;country, and CEO&rarr;company. These relations were specifically chosen for their many-to-one association, exemplified by the fact that a country can host a myriad of buildings, yet each building typically pertains to a single country. The benchmark is devised to gauge two primary capabilities: the modeling of visual relations and the application of worldly knowledge in task execution. Although originally devised for single-word answer generation, this dataset, also facilitates the retrieval of images that correctly demonstrate visual arithmetic. It is therefor able to handle the multi-modal arithmetics that will be performed using FROMAGe.
 
 
 ### Chain-of-Thought prompting
@@ -59,7 +60,7 @@ The original implementation of the FROMAGe model is publicly available[^1], howe
 
 ### T-SNE
 
-In this study, we leverage t-Distributed Stochastic Neighbor Embedding (T-SNE), a non-linear dimensionality reduction technique that is particularly adept at preserving local structure within high-dimensional datasets. T-SNE calculates the similarity of data points in the high-dimensional space and then maps it to a lower-dimensional space. It uses gradient descent to minimizes the Kullback-Leibler (KL) divergence between the high and low-dimensional representations with respect to the locations of the points in the map. The output is a two- or three-dimensional representation of the data that can be easily visualized, preserving the structure and relationships inherent in the high-dimensional data space as much as possible. This dimensionality reduction algorithm is used to visualize nonlinear relations between the image embeddings, allowing for an better analysis of the retrieved tokens from the FROMAGe model.
+In this study, we leverage t-Distributed Stochastic Neighbor Embedding (T-SNE) (Van der Maaten et al., 2008), a non-linear dimensionality reduction technique that is particularly adept at preserving local structure within high-dimensional datasets. T-SNE calculates the similarity of data points in the high-dimensional space and then maps it to a lower-dimensional space. It uses gradient descent to minimizes the Kullback-Leibler (KL) divergence between the high and low-dimensional representations with respect to the locations of the points in the map. The output is a two- or three-dimensional representation of the data that can be easily visualized, preserving the structure and relationships inherent in the high-dimensional data space as much as possible. This dimensionality reduction algorithm is used to visualize nonlinear relations between the image embeddings, allowing for an better analysis of the retrieved tokens from the FROMAGe model.
 
 ## Results
 
