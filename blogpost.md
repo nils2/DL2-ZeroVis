@@ -1,4 +1,4 @@
-# Title here
+# **I2I-VISA**: **I**mage-to-**I**mage Retrieval for **Vi**sual-**S**emantic **A**rithmetic
 
 ## Introduction
 
@@ -79,11 +79,6 @@ In this study, we leverage t-Distributed Stochastic Neighbor Embedding (T-SNE) (
 
 (So far all we can conclude is that the task is very difficult and that the benchmark is not a very good one, as the paper it is from mentioned 320 relations (there are only about 39) and they mention in the paper the relation countries-> cities but this should be flags->cities as for example australia in australia->canberra only exists in flags)
 
-[comment]: <> (Technical limitations specific to FROMAGe:)
-[comment]: <> (- does not always generate \[RET\] during inference)
-[comment]: <> (- strong bias to produce regular text tokens)
-[comment]: <> (Which are likely dou to its comprehensive pre-training regime (on text-only data).)
-[comment]: <> (Somewhat alleviated by specifically prompting the model to ask it to show images.)
 
 ### Contributions
 
