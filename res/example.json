@@ -1,0 +1,10 @@
+{
+    "inputs": [
+        "{companies/microsoft} deb {CEOs/bill_gates} pud {CEOs/bill_gates} rok Microsoft",
+        "{companies/microsoft} deb {CEOs/bill_gates} pud {CEOs/mark_zuckerberg} rok Facebook",
+        "{companies/microsoft} deb {CEOs/bill_gates} pud {CEOs/jeff_bezos} rok Amazon",
+        "{companies/microsoft} deb {CEOs/bill_gates} pud {CEOs/steve_jobs} rok Apple",
+        "{companies/microsoft} deb {CEOs/bill_gates} pud {CEOs/elon_musk} rok"
+    ],
+    "expected_output": "Tesla"
+}
