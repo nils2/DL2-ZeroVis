@@ -1,4 +1,4 @@
-# **I2I-VISA**: **I**mage-to-**I**mage Retrieval for **Vi**sual-**S**emantic **A**rithmetic
+# *I2I-VISA*: *I*mage-to-*I*mage Retrieval for *Vi*sual-*S*emantic *A*rithmetic
 
 ## Introduction
 
