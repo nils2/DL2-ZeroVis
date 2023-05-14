@@ -56,7 +56,11 @@ Introduced in **ZeroCap**, /Tewel 2022/ the Visual Relations benchmark encompass
 
 ### Chain-of-Thought prompting
 
+**Few-shot learning** is an exciting characteristic of LLMs first shown for GPT-3 (/Brown et al. 2020/). With a large enough language model (175 billion parameters in the case of GPT-3), a fascinating ability emerges: Language models can "learn" from exemplars specified in the input (note that no model parameters are updated in this setting). Inspired by this ability, /Wei et al. 2022/) showed that using this technique, combined with outlying a **chain of thought** can elicit reasoning in LLMs: compared to the baseline of providing the model only with the solution of a complex task, performance can increase drastically when providing an exemplar with a chain of thought, compared to **standard prompting** (few-shot non-chain-of-thought):
 
+<img src="img/chainofthought.png" alt="Example of chain-of-thought prompting compared to standard prompting" width="500"/>
+
+While this performance increase is often attributed to the emergent few-shot learning ability, (Kojima et al. 2023) showed that even **zero-shot chain-of-thought** prompting yields remarkable improvements. They show that just adding the string "Let's think step by step" before each answer steers the model into generating a chain of thought, possibly helping it to come up with the correct solution. In their experiments, zero-shot chain-of-thought prompting significantly outperforms classical zero-shot prompting (i.e., task only as input), while performance few-shot chain-of-thought prompting cannot be achieved.
 
 ### T-SNE
 
