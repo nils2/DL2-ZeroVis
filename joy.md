@@ -38,16 +38,19 @@ We make use of the Visual Relations Benchmark introduced in the ZeroCap (Tewel e
 
 ### Applying FROMAGe to Visual Arithmetic Tasks
 
-Applying the FROMAGe model to visual arithmetic tasks involves processing each image with the visual encoder to extract visual embeddings. These embeddings are mapped, using the pretrained linear mapping of the model, into the input space of the language model. The newly mapped text-like query describing the analogy task is interleaved with the [RET] token.
+####  W2V approach
+Applying the FROMAGe model to visual arithmetic tasks involves processing each image with the CLIP decoder to extract visual embeddings. These embeddings are mapped into the input space of the language model. The arithmetics are then performed on these embeddings and the resulting embedding is concatenated with a [RET] token and passed through the LLM.
 
-The FROMAGe model is then tasked to retrieve an image that correctly completes the analogy. The model's grounding in both language and visual inputs should ideally enable it to understand the relationship between the entities and provide a coherent, accurate response - for example, returning an image of Angela Merkel in response to the analogy task involving images of Obama, the USA, and Germany.
+Consequently, the FROMAGe model is then tasked to retrieve an image for the analogy based on the resulting [RET] token.
 
-EXAMPLE OF PROMPT WILL BE SHOWN HERE, FOR NOW:
+EXAMPLE OF PROMPT WILL BE SHOWN HERE:
 > "Who is the president of Germany?"\
 > X = image(Obama) - image(USA) + image(Germany) &rarr; image(Angela Merkel)
 
 
 CORRESPONDING RESULTS WILL BE SHOWN HERE
+
+(@Feedbackers: Examples can be seen in [example](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/example.ipynb) and in [results](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/results.ipynb).
 
 #### Chain-of-Thought Prompting for Visual Arithmetic
 Chain-of-thought prompting is a technique aimed at enhancing the reasoning ability of large language models. Rather than presenting a prompt in isolation, it involves including a series of intermediate reasoning steps in natural language within the few-shot prompting process (Kojima et al. 2022). This has been shown to improve performance, particularly for complex reasoning tasks (Wei et al. 2022, Suzgun et al. 2022). When applied in combination with visual arithmetic tasks, it can offer deeper insights into how well the model understands and connects visual and linguistic cues.
@@ -59,11 +62,11 @@ EXAMPLE OF PROMPT WILL BE SHOWN HERE
 CORRESPONDING RESULTS WILL BE SHOWN HERE
 
 #### T-SNE
+NOT FINISHED YET, BUT THE GIST IS THAT WE USE T-SNE TO SEE HOW THE RETRIEVAL EMBEDDINGS CORRELATE AMONGST THEMSELVES, SEE RESULTS NOTEBOOK FOR CODE AND PLOT.
+
 In this study, we leverage t-Distributed Stochastic Neighbor Embedding (T-SNE) (Van der Maaten et al., 2008), a non-linear dimensionality reduction technique that is particularly adept at preserving local structure within high-dimensional datasets. T-SNE calculates the similarity of data points in the high-dimensional space and then maps it to a lower-dimensional space. It uses gradient descent to minimizes the Kullback-Leibler (KL) divergence between the high and low-dimensional representations with respect to the locations of the points in the map. The output is a two- or three-dimensional representation of the data that can be easily visualized, preserving the structure and relationships inherent in the high-dimensional data space as much as possible. This dimensionality reduction algorithm is used to visualize nonlinear relations between the image embeddings, allowing for an better analysis of the retrieved tokens from the FROMAGe model.
 
 ## Conclusion
-
+So far all we can conclude is that the task is very difficult and that the benchmark is not a very good one, as the paper it is from mentioned 320 relations (there are only about 39) and they mention in the paper the relation countries-> cities but this should be flags->cities as for example australia in australia->canberra only exists in flags.
 
 ## Individual Contributions
-
-
