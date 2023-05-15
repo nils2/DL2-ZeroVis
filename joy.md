@@ -1,5 +1,5 @@
 # Chain-of-Thought Prompting and Visual Arithmetic Tasks: Exploring Grounding in FROMAGe
-> Joy Crosbie
+> Joy Crosbie, Emile Dhifallah, Dominik Martínez, Gergely Papp, Nils Peters
 
 ## Introduction
 
@@ -17,38 +17,52 @@ The paper by Koh et al. (2023) highlights several key strengths of the proposed 
 
 In the context of deep learning, visual arithmetic tasks are not about traditional numerical operations, but rather about finding analogies or relationships between different entities. This concept takes inspiration from the vector arithmetic introduced by Mikolov et al. (2013). In their work, they demonstrated that word embeddings can be manipulated using arithmetic operations to reveal semantic relationships between words. Extending this idea into the visual domain, visual arithmetic tasks involve understanding and applying a transformation observed in a pair of images to another pair. A classic example would be: if "Obama" is to "USA" as "X" is to "Germany", what is "X"? The correct answer would ideally be "Angela Merkel", following the logic of leaders to their respective countries.
 
-Building on this concept, Tewel et al. (2022) in their work on ZeroCap, applied arithmetic operations to visual embeddings to "generate knowledge of the external world". They perform calculations over a combination of visual and textual inputs by operating in the latent embedding space. However, their methodology relies on CLIP (Radford et al., 2021), a model that can handle visual and textual inputs but only generates textual outputs, thus limiting their arithmetic to natural language output.
+Building on this concept, Tewel et al. (2022) in their work on ZeroCap, applied arithmetic operations to visual embeddings to "generate knowledge of the external world". They perform calculations over a combination of visual and textual inputs by operating in the latent embedding space. However, their methodology relies on CLIP (Radford et al., 2021), a model that can handle visual and textual inputs but only generates textual outputs, thus limiting their arithmetic to natural language output:
+
+> "Who is the president of Germany?"\
+> X = image(Obama) - image(USA) + image(Germany) &rarr; "Angela Merkel"
 
 Visual arithmetic tasks provide an interesting paradigm for exploring the grounding capabilities of multimodal language models. These tasks involve the ability to comprehend, reason, and make decisions based on visual inputs - a challenge that requires a deep level of grounding in the visual world. By applying the FROMAGe model to these tasks, we can gain a better understanding of the extent to which it is truly "grounded". Moreover, with FROMAGe's ability to process and output multimodal data, we are equipped to extend the arithmetic operations’ output into the visual domain, overcoming the limitations faced by models such as CLIP.
 
 
 
-## Methodology(ish) & Results
+## This section needs a title
 
 ### Visual Relations Benchmark
-Introduced in the ZeroCap (Tewel et al., 2023) paper, the Visual Relations benchmark encompasses 320 distinct relationships distributed among image templates, such as buildings→country, countries→capital, foods→country, leaders→country, and CEO→company. These relations were specifically chosen for their many-to-one association, exemplified by the fact that a country can host a myriad of buildings, yet each building typically pertains to a single country. The benchmark is devised to gauge two primary capabilities: the modeling of visual relations and the application of worldly knowledge in task execution. Although originally devised for single-word answer generation, this dataset also facilitates the retrieval of images that correctly demonstrate visual arithmetic. It is therefore able to handle the multi-modal arithmetics that will be performed using FROMAGe.
+We make use of the Visual Relations Benchmark introduced in the ZeroCap (Tewel et al., 2023) paper. This benchmark encompasses 320 distinct relationships distributed among image templates, such as buildings→country, countries→capital, foods→country, leaders→country, and CEO→company. These relations were specifically chosen for their many-to-one association, exemplified by the fact that a country can host a myriad of buildings, yet each building typically pertains to a single country. The benchmark is devised to gauge two primary capabilities: the modeling of visual relations and the application of worldly knowledge in task execution. Although originally devised for single-word answer generation, this dataset also facilitates the retrieval of images that correctly demonstrate visual arithmetic. It is therefore able to handle the multi-modal arithmetics that will be performed using FROMAGe.
 
 
 ### Applying FROMAGe to Visual Arithmetic Tasks
 
-Applying the FROMAGe model to visual arithmetic tasks involves processing each image with the visual encoder to extract visual embeddings. These embeddings are mapped into the input space of the language model. The text query describing the analogy task is interleaved with the corresponding [RET] tokens, creating a multimodal input that connects the images with the analogy operation.
+Applying the FROMAGe model to visual arithmetic tasks involves processing each image with the visual encoder to extract visual embeddings. These embeddings are mapped, using the pretrained linear mapping of the model, into the input space of the language model. The newly mapped text-like query describing the analogy task is interleaved with the [RET] token.
 
-The FROMAGe model is then tasked to generate a response that correctly completes the analogy. The model's grounding in both language and visual inputs should ideally enable it to understand the relationship between the entities and provide a coherent, accurate response - for example, identifying Angela Merkel in response to the analogy task involving Obama, the USA, and Germany.
+The FROMAGe model is then tasked to generate a response that correctly completes the analogy. The model's grounding in both language and visual inputs should ideally enable it to understand the relationship between the entities and provide a coherent, accurate response - for example, returning an image of Angela Merkel in response to the analogy task involving images of Obama, the USA, and Germany.
 
-### Chain-of-Thought Prompting for Visual Arithmetic
-Chain-of-thought prompting is a technique aimed at enhancing the reasoning ability of large language models. Rather than presenting a prompt in isolation, it involves including a series of intermediate reasoning steps in natural language within the few-shot prompting process. The approach effectively guides the model through a logical pathway, allowing it to follow and understand the reasoning process better. When applied in combination with visual arithmetic tasks, it can offer deeper insights into how well the model understands and connects visual and linguistic cues.
+EXAMPLE OF PROMPT WILL BE SHOWN HERE, FOR NOW:
+> "Who is the president of Germany?"\
+> X = image(Obama) - image(USA) + image(Germany) &rarr; image(Angela Merkel)
 
-In the context of visual arithmetic tasks, chain-of-thought prompting would involve presenting the FROMAGe model with a set of visual analogies along with a series of intermediate reasoning steps. For instance, instead of directly asking "Obama is to the USA as X is to Germany", the model would be guided through the reasoning process: "Obama is a former leader of the USA. Leaders of countries are often analogous to leaders of other countries. Therefore, if we consider Germany, a former leader analogous to Obama would be Angela Merkel."
 
-This process of chain-of-thought prompting encourages the model to better understand and follow the reasoning pathway, ultimately enhancing its performance on the visual arithmetic task at hand. The use of chain-of-thought prompting in visual arithmetic tasks can provide valuable insights into the grounding capabilities of the FROMAGe model. Observing how the model processes and responds to a sequence of reasoning steps allows us to assess not only its understanding of the visual and textual inputs but also its ability to follow a logical reasoning process.
+CORRESPONDING RESULTS WILL BE SHOWN HERE
 
+#### Chain-of-Thought Prompting for Visual Arithmetic
+Chain-of-thought prompting is a technique aimed at enhancing the reasoning ability of large language models. Rather than presenting a prompt in isolation, it involves including a series of intermediate reasoning steps in natural language within the few-shot prompting process (Kojima et al. 2022). This has been shown to improve performance, particularly for complex reasoning tasks (Wei et al. 2022, Suzgun et al. 2022). When applied in combination with visual arithmetic tasks, it can offer deeper insights into how well the model understands and connects visual and linguistic cues.
+
+In the context of visual arithmetic tasks, chain-of-thought prompting would involve presenting the FROMAGe model with a set of visual analogies along with a series of intermediate reasoning steps. For instance, instead of directly asking "Obama is to the USA as X is to Germany", the model would be guided through the reasoning process: 
+
+EXAMPLE OF PROMPT WILL BE SHOWN HERE
+
+CORRESPONDING RESULTS WILL BE SHOWN HERE
+
+#### T-SNE
+In this study, we leverage t-Distributed Stochastic Neighbor Embedding (T-SNE) (Van der Maaten et al., 2008), a non-linear dimensionality reduction technique that is particularly adept at preserving local structure within high-dimensional datasets. T-SNE calculates the similarity of data points in the high-dimensional space and then maps it to a lower-dimensional space. It uses gradient descent to minimizes the Kullback-Leibler (KL) divergence between the high and low-dimensional representations with respect to the locations of the points in the map. The output is a two- or three-dimensional representation of the data that can be easily visualized, preserving the structure and relationships inherent in the high-dimensional data space as much as possible. This dimensionality reduction algorithm is used to visualize nonlinear relations between the image embeddings, allowing for an better analysis of the retrieved tokens from the FROMAGe model.
+
+## Conclusion
 ## Novel Contributions
 Our novel contributions include:
 * Building upon the foundational paper that introduced FROMAGe, by offering novel insights into its visual arithmetic capabilities. Our findings will illustrate whether the model can successfully execute complex visual arithmetic operations, thereby broadening our comprehension of FROMAGe's functionality and potential applications.
 * Evaluating the impact of latent few-shot in-context learning abilities of large language models (LLMs) on visual arithmetic. By investigating Chain-of-Thought reasoning on a task and modality that these LLMs are not trained on, we present the in-context abilities from a unique viewpoint divergent from previous literature. Our research discloses how the model effectively generalizes from limited examples, markedly enhancing the efficiency and precision of visual arithmetic operations.
 * Demonstrating the influence of multimodal inputs on visual arithmetic. We furnish a deeper understanding of the interaction between different modalities in multimodal models, especially in tasks they are not trained on. The insights derived from this exploration bear significant implications for how multimodal models should be trained and utilized.
-
-## Conclusion
 
 ## Individual Contributions
 
