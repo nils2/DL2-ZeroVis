@@ -1,7 +1,6 @@
 # Introduction
-Before FROMAGe, attempts to ground language models in a multimodal context were primarily focused on combining text and visual data during the training phase of the models (Alayrac et al., 2022; Aghajanyan et al., 2022). These methods often required extensive computational resources and large-scale datasets. While effective, the need for such resources presented barriers to the widespread application of these models. In contrast, FROMAGe innovatively leverages existing pretrained models and efficiently incorporates visual grounding, thus making significant strides in the field of multimodal language models.
 
-## FROMAGe
+### FROMAGe
 
 In the era of burgeoning language models, a key challenge lies in the lack of multimodal grounding. Language models, despite being trained on massive text corpora and demonstrating impressive capabilities such as generating human-like dialogue and answering complex questions, are generally incapable of incorporating visual cues. This significantly limits their performance on tasks that require visual reasoning and grounding. The paper, "Grounding Language Models to Images for Multimodal Generation", addresses this limitation by introducing the FROMAGe (Frozen Retrieval Over Multimodal Data for Autoregressive Generation) model, which extends the capabilities of a standard text-only language model to a multimodal (text and image) realm.
 
@@ -11,7 +10,7 @@ The paper by Koh et al. (2023) highlights several key strengths of the proposed 
 
 
 
-## Visual Arithmetic Tasks and Grounding
+### Visual Arithmetic Tasks and Grounding
 
 In the context of deep learning, visual arithmetic tasks are not about traditional numerical operations, but rather about finding analogies or relationships between different entities. This concept takes inspiration from the vector arithmetic introduced by Mikolov et al. (2013). In their work, they demonstrated that word embeddings can be manipulated using arithmetic operations to reveal semantic relationships between words. Extending this idea into the visual domain, visual arithmetic tasks involve understanding and applying a transformation observed in a pair of images to another pair. A classic example would be: if "Obama" is to "USA" as "X" is to "Germany", what is "X"? The correct answer would ideally be "Angela Merkel", following the logic of leaders to their respective countries.
 
