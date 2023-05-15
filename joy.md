@@ -40,7 +40,7 @@ We make use of the Visual Relations Benchmark introduced in the ZeroCap (Tewel e
 
 Applying the FROMAGe model to visual arithmetic tasks involves processing each image with the visual encoder to extract visual embeddings. These embeddings are mapped, using the pretrained linear mapping of the model, into the input space of the language model. The newly mapped text-like query describing the analogy task is interleaved with the [RET] token.
 
-The FROMAGe model is then tasked to generate a response that correctly completes the analogy. The model's grounding in both language and visual inputs should ideally enable it to understand the relationship between the entities and provide a coherent, accurate response - for example, returning an image of Angela Merkel in response to the analogy task involving images of Obama, the USA, and Germany.
+The FROMAGe model is then tasked to retrieve an image that correctly completes the analogy. The model's grounding in both language and visual inputs should ideally enable it to understand the relationship between the entities and provide a coherent, accurate response - for example, returning an image of Angela Merkel in response to the analogy task involving images of Obama, the USA, and Germany.
 
 EXAMPLE OF PROMPT WILL BE SHOWN HERE, FOR NOW:
 > "Who is the president of Germany?"\
