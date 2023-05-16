@@ -81,6 +81,9 @@ To ascertain whether the model faced inherent difficulties in performing the tas
 
 *(add examples and interpretation here)*
 
+### Susceptibility to textual input
+
+During our experiments, we observed significant disparities in the quality of the model's output that could be triggered by minor variations in the input. Remarkably, even slight differences in word capitalization could yield crucial distinctions when attempting to retrieve images. To illustrate this phenomenon, we present a striking example involving the terms "apple" and "Apple." When prompting for an "Image of apple the company," the model retrieves images of apples as fruits. However, capitalizing "Apple" in the same prompt leads to the retrieval of Apple's logo. Nonetheless, it is worth noting that standardized capitalization does not guarantee favorable results, as demonstrated by another example involving the term "Australia." When prompted for an "Image of australia the flag", the model initially retrieves the flag of South Africa, with only the second and third images representing Australia's flag. Intriguingly, capitalizing "Australia" in the same prompt results in a degraded output, featuring just one Australian flag among the first three retrieved images. These subtle disparities in the textual input are beyond our control but can significantly influence the model's performance.
 
 ### Limitations of the dataset
 In addition to its small size, the Visual Relations dataset possesses a notable shortcoming in terms of category definition. To illustrate this, we once again employed T-SNE, this time appyling it to the output of the linear translation layer, i.e., the textual representation of the image input.
