@@ -66,6 +66,29 @@ NOT FINISHED YET, BUT THE GIST IS THAT WE USE T-SNE TO SEE HOW THE RETRIEVAL EMB
 
 In this study, we leverage t-Distributed Stochastic Neighbor Embedding (T-SNE) (Van der Maaten et al., 2008), a non-linear dimensionality reduction technique that is particularly adept at preserving local structure within high-dimensional datasets. T-SNE calculates the similarity of data points in the high-dimensional space and then maps it to a lower-dimensional space. It uses gradient descent to minimizes the Kullback-Leibler (KL) divergence between the high and low-dimensional representations with respect to the locations of the points in the map. The output is a two- or three-dimensional representation of the data that can be easily visualized, preserving the structure and relationships inherent in the high-dimensional data space as much as possible. This dimensionality reduction algorithm is used to visualize nonlinear relations between the image embeddings, allowing for an better analysis of the retrieved tokens from the FROMAGe model.
 
+## Discussion
+
+With our experiments, we shed light on the multimodal capabilities of FROMAGe. While some results demonstrate that the model is capable of performing visual arithmetics, our examples also highlight that the model often struggled to complete the task.
+
+### Limitations of the LLM
+*(working title as it depends on our findings)*
+
+To gain insights into the underlying causes of this low performance, we conducted an analysis of the latent representations, hoping to get an insight on stages prior to the retrieval of the output images. We employed t-Distributed Stochastic Neighbor Embedding (T-SNE) (Van der Maaten et al., 2008) to compare latent representations of the data while being processed by the model.
+
+T-SNE is a non-linear dimensionality reduction technique known for its ability to preserve local structure within high-dimensional datasets. It calculates the similarity of data points in the high-dimensional space and maps it to a lower-dimensional space. This technique leverages gradient descent to minimize the Kullback-Leibler divergence between the high and low-dimensional representations, determining the optimal locations of the points in the map. We employed this dimensionality reduction algorithm to visualize non-linear relations between the latent representations, facilitating a more comprehensive analysis and an easily interpretable visualization of their relations.
+
+To ascertain whether the model faced inherent difficulties in performing the task, we downcast the multi-dimensional representation of the LLM's output just before retrieving the output images. Our rationale behind this approach is to evaluate whether the latent output representation closely resembles the representation of the expected image output.If the latent output representation aligns well with the desired image, it indicates that the LLM handles the task effectively, with any performance issues lying in the retrieval stage. Conversely, unexpected latent output representations would suggest that the model indeed struggles to complete the task.
+
+*(add examples and interpretation here)*
+
+
+### Limitations of the dataset
+In addition to its small size, the Visual Relations dataset possesses a notable shortcoming in terms of category definition. To illustrate this, we once again employed T-SNE, this time appyling it to the output of the linear translation layer, i.e., the textual representation of the image input.
+
+The resulting T-SNE plot reveals certain category intertanglements. One such intertanglement can be observed between the categories *countries* and *flags*. Their close proximity in the plot raises questions about the justification of treating them as distinct categories, especially since images representing countries often feature the country's flag. Moreover, the categories, of *CEOs* and *leaders* form a combined cluster in the plot, although this cluster could just contain representations of people. Another potentially problematic cluster emerged between the categories of *cities* and *buildings*.
+
+*(include T-SNE plot here)*
+
 ## Conclusion
 So far all we can conclude is that the task is very difficult and that the benchmark is not a very good one, as the paper it is from mentioned 320 relations (there are only about 39) and they mention in the paper the relation countries-> cities but this should be flags->cities as for example australia in australia->canberra only exists in flags.
 
