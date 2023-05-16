@@ -9,6 +9,8 @@ from torchvision import transforms as T
 from transformers import AutoFeatureExtractor
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from io import BytesIO
 
 import random
@@ -23,7 +25,13 @@ def dump_git_status(out_file=sys.stdout, exclude_file_patterns=['*.ipynb', '*.th
 
 
 def get_image_from_url(url: str):
-    response = requests.get(url)
+    session = requests.Session()
+    retry = Retry(connect=5, backoff_factor=0.9)
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
+    response = session.get(url)
     img = Image.open(BytesIO(response.content))
     img = img.resize((224, 224))
     img = img.convert('RGB')
