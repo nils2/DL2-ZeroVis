@@ -6,13 +6,14 @@ import math
 import numpy as np
 import os
 import torch
+import requests
 from torch import Tensor
 import torch.nn as nn
 import torch.nn.functional as F
 from einops import rearrange
 from functools import partial
 import pickle as pkl
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, UnidentifiedImageError, ImageFont, ImageDraw
 
 from transformers import OPTForCausalLM, GPT2Tokenizer
 
@@ -293,7 +294,8 @@ class Fromage(nn.Module):
                                       top_p: float = 1.0,
                                       temperature: float = 0.0,
                                       max_num_rets: int = 1,
-                                      max_img_per_ret: int = 1):
+                                      max_img_per_ret: int = 1,
+                                      font_dir='./res/'):
         """
     Encode prompts into embeddings.
 
@@ -410,10 +412,28 @@ class Fromage(nn.Module):
                     try:
                         seen_image_idx.append(img_idx)
                         img = utils.get_image_from_url(self.path_array[img_idx])
+
+                        # Draw k on image
+                        draw = ImageDraw.Draw(img)
+
+                        font_file = os.path.join(font_dir, 'courier_new.ttf')
+                        if os.path.isfile(font_file):
+                            font = ImageFont.truetype(font_file, size=24)
+                        else:
+                            font = ImageFont.load_default()
+
+                        text = f"K={k}"
+                        pos = (10, 10)
+                        left, top, right, bottom = draw.textbbox(pos, text, font=font)
+                        draw.rectangle((left - 5, top - 5, right + 5, bottom + 5), fill="red")
+                        draw.text(pos, text, font=font, fill="black")
+
                         image_outputs.append([img, k])
                         if len(image_outputs) == max_img_per_ret:
                             break
                     except UnidentifiedImageError:
+                        pass
+                    except requests.exceptions.ConnectionError:
                         pass
 
                 # caption = self.model.tokenizer.batch_decode(generated_ids[:, last_ret_idx:ret_idx],
