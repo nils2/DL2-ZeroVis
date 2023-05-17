@@ -133,6 +133,7 @@ class PromptParser:
                         image = output[0]
                     image = image.resize((224, 224))
                     image = image.convert('RGB')
+                    plt.axis('off')
                     plt.imshow(image)
                 # Use this to display the RET image/s
                 else:
@@ -145,6 +146,7 @@ class PromptParser:
                             image = np.zeros((224, 224, 3), dtype=np.uint8)
                         ax[i].imshow(image)
                         ax[i].set_title(f'Retrieval #{i+1}')
+                        ax[i].set_axis_off()
                 plt.show()
 
     # =====================================================================
