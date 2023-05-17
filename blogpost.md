@@ -98,6 +98,12 @@ The choice to retrieve output images rather than generating them is an intention
 
 One notable limitation arises from the specific dataset employed in FROMAGe, which is stored in a decentralized manner and lacks long-term availability guarantees. Consequently, some of the images linked to through the provided URLs are no longer accessible. To address this issue, we employ a fallback approach that retrieves the next-best output while indicating the position of the image candidate. However, it is important to note that if the output at a specific position is suboptimal, our ability to draw comprehensive conclusions about the model's capacity to complete the task becomes restricted, as potentially superior solutions cannot be displayed.
 
+## Limitations and future research
+
+While our findings provide valuable insights into the capabilities of FROMAGe and its grounding in the visual domain, it is important to acknowledge the need for more comprehensive research to draw definitive conclusions. Our current study serves as an exploratory endeavor, and conducting experiments with a broader range of prompts would yield a more comprehensive understanding of the model's performance. Additionally, it is crucial to introduce reliable quantitative evaluation measures and larger benchmark datasets for (semi-)automatic evaluation,  facilitating a more generalizable analysis of the model's effectiveness.
+
+Moreover, there are two promising avenues for extending our research. Firstly, it is essential to explore the potential of the FROMAGe model in untested tasks, which would further validate the key strengths highlighted by Koh et al. (2023). By applying the model to various visual-textual tasks, we can gain deeper insights into its overall quality within the multimodal domain. Secondly, the visual arithmetic task remains relatively unexplored. Further investigation, along with the development of a robust benchmark, is necessary to explore how different multimodal models approach this task. This research would contribute to a better understanding of how multimodal models integrate diverse modalities and open up new possibilities for architectural advancements.
+
 ## Conclusion
 So far all we can conclude is that the task is very difficult and that the benchmark is not a very good one, as the paper it is from mentioned 320 relations (there are only about 39) and they mention in the paper the relation countries-> cities but this should be flags->cities as for example australia in australia->canberra only exists in flags.
 
