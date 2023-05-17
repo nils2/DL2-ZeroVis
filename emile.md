@@ -5,11 +5,11 @@
 
 ### FROMAGe
 
-In the era of evergrowing language models, a key challenge to obtaining models that can reason about vision and text lies in the lack of multimodal grounding. Language models (LM's), are trained on massive text corpora and demonstrate impressive capabilities such as generating human-like dialogue, answering complex questions, and learning new tasks from very few examples. Despite this, they are generally incapable of incorporating visual cues. This significantly limits their performance on tasks that require visual reasoning and grounding. The paper, "Grounding Language Models to Images for Multimodal Generation", addresses this limitation by introducing FROMAGe (Frozen Retrieval Over Multimodal Data for Autoregressive Generation), a multimodal framework which extends the semantic capabilities of LM's to a multimodal (text and image) realm in a very efficient manner.
+In the era of evergrowing language models, a key challenge to obtaining models that can reason about vision and text lies in the lack of multimodal grounding. Language models (LM's), are trained on massive text corpora and demonstrate impressive capabilities such as generating human-like dialogue, answering complex questions, and learning new tasks from very few examples. Despite this, they are generally incapable of incorporating visual cues. This significantly limits their performance on tasks that require visual reasoning and grounding. The paper, "Grounding Language Models to Images for Multimodal Generation", addresses this limitation by introducing FROMAGe (Frozen Retrieval Over Multimodal Data for Autoregressive Generation), a foundational framework which extends the semantic capabilities of LM's to a multimodal (text and image) realm in a very efficient manner.
 
-FROMAGe (Koh et al., 2023) employs a pretrained language model and a visual encoder, both kept frozen, to ground language models visually. This grounding is achieved by training the model with a multitask objective for image captioning and image-text retrieval. For image captioning, the model learns to extract visual embeddings and map them into the input space of the language model through a maximum likelihood objective. On the other hand, for image-text retrieval, the model uses contrastive learning to map the embeddings of a new [RET] token, which represents an image to be retrieved, to the corresponding visual embeddings. This process only updates the weights of the linear layers and the [RET] token embedding, ensuring computation and memory efficiency.
+FROMAGe (Koh et al., 2023) employs a pretrained language model and the encoder of a vision transformer (ViT), both kept frozen, to ground language models visually. This grounding is achieved by training the model with a multitask objective for image captioning and image-text retrieval. For image captioning, the model learns to extract visual embeddings and map them into the input space of the language model through a maximum likelihood objective. On the other hand, for text-image retrieval, the model uses contrastive learning to map the embeddings of a new [RET] token, which represents an image to be retrieved, to the corresponding visual embeddings. This process only updates the weights of the linear layers and the [RET] token embedding, ensuring computation and memory efficiency. The authors of FROMAGe explicitly refrain from fine-tuning either of the models because this would the parameter configurations that make these models so powerful in their respective domains intact. They reason this enables better generalization for in-context learning.
 
-Koh et al. highlight several key strengths of this novel multimodal architecture. Firstly, FROMAGe retains the original abilities of the text-only language model, such as free-form text generation, while also acquiring new multimodal dialogue and reasoning abilities. This means that both model input and outut can be consistently intertwined image and text data. Because the visual embedding space is mapped to the LM's embedding space, the model is able to reason about complex visual cues, akin to CLIP (Radford et al., 2021). Secondly, the model demonstrates strong few-shot multimodal abilities learned from image-caption pairs alone, which is a standout feature as most models require web-scale interleaved image-text data (Alayrac et al., 2022; Aghajanyan et al., 2022). Thirdly, FROMAGe demonstrates superior text-to-image retrieval sensitivity, especially for long and complex free-form text. Lastly, the framework enhances  existing capabilities of pretrained language models, such as in-context learning, input sensitivity, and dialogue generation, for visually grounded tasks.
+Koh et al. highlight several key strengths of this novel multimodal architecture. Firstly, FROMAGe retains the original abilities of the text-only language model, such as free-form text generation, while also acquiring new multimodal dialogue and reasoning abilities. This means that both model input and outut can be consistently intertwined image and text data. Because the visual embedding space is mapped to the LM's embedding space, the model is able to reason about complex visual cues, akin to CLIP (Radford et al., 2021). Secondly, the model demonstrates strong few-shot multimodal abilities learned from image-caption pairs alone, which is a standout feature as most models require web-scale interleaved image-text data (Alayrac et al., 2022; Aghajanyan et al., 2022). Thirdly, FROMAGe demonstrates superior text-to-image retrieval sensitivity, especially for long and complex free-form text. Lastly, the framework enhances existing capabilities of pretrained language models, such as in-context learning, input sensitivity, and dialogue generation, for visually grounded tasks.
 
 
 ### Visual Arithmetic Tasks and Grounding
@@ -32,44 +32,64 @@ Our novel contributions include:
 
 ##  In-context learning for visual arithmetics
 
-### Prompting FROMAGe
-In order to investigate how we can use FROMAGe for visual arithmetics, we want to evaluate how well it can retrieve relevant visual data using instructing prompts. To be able to evaluate how well FROMAGe can perform retrieval for visual arithmetics, we evaluate how well the model can perform regular textual analogy resolution (i.e. word vector arithmetics), as well as arithmetics using textual input and visual output ('W2V'), visual output and textual input (equivalent to ZeroCap), and visual input and output. As a result, we can analyze how strong FROMAGe's reasoning capabilities are, and how these are put to work in the grounded setting. We use prompt templates to compare the model on arithmetic tasks in zero-shot, few-shot and chain-of-thought fashion. 
+### Prompting and assessing FROMAGe
+In order to investigate how we can use FROMAGe for visual arithmetics, we want to evaluate how well it can retrieve relevant visual data, given visual input and additional instruction prompts. To be able to evaluate how well the model can perform retrieval for visual arithmetics, we measure how well FROMAGe performs in the task of visual analogy resolution, as well as visual analogy resolution with the help of instruction prompts (zero-shot learning), and with the help of instructions and task examples (few-shot learning). We also experiment how Chain-of-Thought reasoning improves visual arithmetic abilities. Ablations show how and which knowledge is embedded in the LM and visual encoder respectively. We also explain certain results by means of comparing them to visualizations of the embedding spaces of images and words, using dimensionality reduction. This anlysis leads us to insight into the strength of FROMAGe's reasoning capabilities in the grounded setting, and how its shared embedding space is utilized for multimodal arithmetics.
 
 ### Visual Relations Benchmark
 We make use of the Visual Relations Benchmark introduced in the ZeroCap (Tewel et al., 2023) paper. This benchmark encompasses 320 distinct relationships distributed among multiple image templates, such as buildings→countries, countries→capitals, foods→countries, leaders→countries, and CEOs→companies. These relations were specifically chosen for their many-to-one association, exemplified by the fact that a country can host a myriad of buildings, yet each building typically pertains to a single country. The benchmark is devised to gauge two primary capabilities: the modeling of visual relations and the application of world knowledge in task execution. Although originally devised for single-word answer generation, this dataset also facilitates the retrieval of images that correctly demonstrate visual arithmetic. It is therefore able to handle the multi-modal arithmetics that will be performed using FROMAGe.
 
-### Applying FROMAGe to Visual Arithmetic Tasks
+### Experimental setup
+Maybe explain evaluation structure (manual checking) here?
 
-#### Experimental setup
+### Visual arithmetics task
+Similar to the concept of word2vec, we firstly apply FROMAGe to solve visual analogy resolution. This means that we perform visual arithmetic without any further prompting. The task relies on image retrieval, which is one of the tasks that FROMAGe was trained on, using a contrastive InfoNCE loss, calculated between pairs of input and retrieval images. Our method involves the CLIP decoder, the model's visual backbone, to calculate visual embeddings. These are mapped to the textual embedding space of the model's LM, which is based on a vocabulary that also contains our desired '[RET]' token. Arithmetic happens as follows. The aggregate of a pair of mapped image embeddings is combined with one half of another pair. More concretely, we take two images containing different main concepts, e.g. a company and its CEO, and subtract one from the other to get a modified latent embedding. To this we add the embedding of a new image within one of the same categories, e.g. another CEO, to get an embedding that supposedly contains information relating to the main concept of the corresponding image in the new image pair. The task is laid out visually in figure 1. 
 
+[Figure 1 explaining the visual arithmetic task in more detail]
 
-####  W2V approach
-Applying the FROMAGe model to visual arithmetic tasks involves processing each image with the CLIP decoder to extract visual embeddings. These embeddings are mapped into the input space of the language model. The arithmetics are then performed on these embeddings and the resulting embedding is concatenated with a [RET] token and passed through the LLM.
-
-Consequently, the FROMAGe model is then tasked to retrieve an image for the analogy based on the resulting [RET] token.
+As can be seen in figure 1, the '[RET]' token is concatenated with the input. The entire input is now pulled through the LM. Because we constrain the model to not output any words, the only token present in the generated output is the '[RET]' token. The way FROMAGe works, is that whenever this token appears in output generation, it retrieves the image with the smallest cosine distance to the aggregate embedding that the '[RET]' represents. This is done by extracting an image array from the internet using a database of retrieval URL's (from the CC3M dataset to be precise). This image is displayed for us to evaluate. The desired outcome is that the main concept of the resulting image is the same as that of our unseen input image.
 
 EXAMPLE OF PROMPT WILL BE SHOWN HERE:
 > "Who is the president of Germany?"\
 > X = image(Obama) - image(USA) + image(Germany) &rarr; image(Angela Merkel)
 
+### Zero-shot prompting for arithmetics
+
+EXAMPLE OF PROMPT WILL BE SHOWN HERE
+
+### Chain-of-Thought to improve zero-shot
+
+#### Chain-of-Thought Prompting
+Chain-of-thought prompting is a technique aimed at enhancing the reasoning ability of large language models. Rather than presenting a prompt in isolation, it involves including a series of intermediate reasoning steps in natural language within the few-shot prompting process (Kojima et al. 2022). This has been shown to improve performance, particularly for complex reasoning tasks (Wei et al. 2022, Suzgun et al. 2022). When applied in combination with visual arithmetic tasks, it can offer deeper insights into how well the model understands and connects visual and linguistic cues.
+
+#### CoT for Visual Arithmetic
+In the context of visual arithmetic tasks, chain-of-thought prompting would involve presenting the FROMAGe model with a set of visual analogies along with a series of intermediate reasoning steps. For instance, instead of directly asking "Obama is to the USA as X is to Germany", the model would be guided through the reasoning process: 
+
+EXAMPLE OF PROMPT WILL BE SHOWN HERE
+
+### Few-shot prompting with CoT
+
+EXAMPLE OF PROMPT WILL BE SHOWN HERE
+
+
+## Results
 
 CORRESPONDING RESULTS WILL BE SHOWN HERE
 
 (@Feedbackers: Examples can be seen in [example](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/example.ipynb) and in [results](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/results.ipynb).
 
-#### Chain-of-Thought Prompting for Visual Arithmetic
-Chain-of-thought prompting is a technique aimed at enhancing the reasoning ability of large language models. Rather than presenting a prompt in isolation, it involves including a series of intermediate reasoning steps in natural language within the few-shot prompting process (Kojima et al. 2022). This has been shown to improve performance, particularly for complex reasoning tasks (Wei et al. 2022, Suzgun et al. 2022). When applied in combination with visual arithmetic tasks, it can offer deeper insights into how well the model understands and connects visual and linguistic cues.
 
-In the context of visual arithmetic tasks, chain-of-thought prompting would involve presenting the FROMAGe model with a set of visual analogies along with a series of intermediate reasoning steps. For instance, instead of directly asking "Obama is to the USA as X is to Germany", the model would be guided through the reasoning process: 
+## Discussion/limitations
 
-EXAMPLE OF PROMPT WILL BE SHOWN HERE
-
-CORRESPONDING RESULTS WILL BE SHOWN HERE
-
-#### T-SNE
+### T-SNE
 NOT FINISHED YET, BUT THE GIST IS THAT WE USE T-SNE TO SEE HOW THE RETRIEVAL EMBEDDINGS CORRELATE AMONGST THEMSELVES, SEE RESULTS NOTEBOOK FOR CODE AND PLOT.
 
 In this study, we leverage t-Distributed Stochastic Neighbor Embedding (T-SNE) (Van der Maaten et al., 2008), a non-linear dimensionality reduction technique that is particularly adept at preserving local structure within high-dimensional datasets. T-SNE calculates the similarity of data points in the high-dimensional space and then maps it to a lower-dimensional space. It uses gradient descent to minimizes the Kullback-Leibler (KL) divergence between the high and low-dimensional representations with respect to the locations of the points in the map. The output is a two- or three-dimensional representation of the data that can be easily visualized, preserving the structure and relationships inherent in the high-dimensional data space as much as possible. This dimensionality reduction algorithm is used to visualize nonlinear relations between the image embeddings, allowing for an better analysis of the retrieved tokens from the FROMAGe model.
+
+### Quality assessment of retrieval URLs
+IDEA HERE IS THAT THE SOMETIMES RETRIEVAL URLS ARE BROKEN/NON-EXISTENT -> THEN FROMAGE RETRIEVES NEXT BEST WORKING URL. ANALYSIS OF THE FREQUENCY OF THIS BEHAVIOR AND ITS IMPACT ON RETRIEVAL QUALITY HELPS TO EXPLAIN RESULTS.
+
+### Ablation study
+IDEA HERE IS THAT ENCODED LM KNOWLEDGE AND ITS INFLUENCE ON VISUAL ARITHMETIC PERFORMANCE IS ANALYZED BY MEANS OF CLASSIC TEXT PROMPTS, TEXTUAL ANALOGY RESOLUTION, TEXT TO IMAGE RETRIEVAL (NEW) AND IMAGE TO TEXT RETRIEVAL (EQUIVALENT TO ZEROCAP).
 
 ## Conclusion
 So far all we can conclude is that the task is very difficult and that the benchmark is not a very good one, as the paper it is from mentioned 320 relations (there are only about 39) and they mention in the paper the relation countries-> cities but this should be flags->cities as for example australia in australia->canberra only exists in flags.
