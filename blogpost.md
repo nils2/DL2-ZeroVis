@@ -92,6 +92,10 @@ The resulting T-SNE plot reveals certain category intertanglements. One such int
 
 *(include T-SNE plot here)*
 
+The confusion between *countries* and *flags* becomes evident not only in the T-SNE plot but also in the relations and images themselves. While Tewel et al. (2013) describe a relation *countries* -> *flags*, not all of the examples within this relation can be accurately expressed using the available images. For instance, since *Australia* is exclusively present in the *flags* category and not in *countries*, the example *Australia -> Canberra* can only be expressed as a *flags -> cities* relation.
+
+*(do we mention the confusion regarding number of images / number of relations?)*
+
 ### Limitations of the retrieval dataset
 
 The choice to retrieve output images rather than generating them is an intentional design decision made by the authors of FROMAGe. This decision offers certain advantages, such as the ability to exercise control over the output by curating the data, but it also entails limitations in terms of image flexibility.
@@ -105,6 +109,6 @@ While our findings provide valuable insights into the capabilities of FROMAGe an
 Moreover, there are two promising avenues for extending our research. Firstly, it is essential to explore the potential of the FROMAGe model in untested tasks, which would further validate the key strengths highlighted by Koh et al. (2023). By applying the model to various visual-textual tasks, we can gain deeper insights into its overall quality within the multimodal domain. Secondly, the visual arithmetic task remains relatively unexplored. Further investigation, along with the development of a robust benchmark, is necessary to explore how different multimodal models approach this task. This research would contribute to a better understanding of how multimodal models integrate diverse modalities and open up new possibilities for architectural advancements.
 
 ## Conclusion
-So far all we can conclude is that the task is very difficult and that the benchmark is not a very good one, as the paper it is from mentioned 320 relations (there are only about 39) and they mention in the paper the relation countries-> cities but this should be flags->cities as for example australia in australia->canberra only exists in flags.
+
 
 ## Individual Contributions
