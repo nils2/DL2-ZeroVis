@@ -50,12 +50,26 @@ We explore various prompting strategies.
 #### Zero-shot W2V inspired approach
 The simplest approach is that insipred by Word2Vec, where the analogy resolution (i.e. image arithmetic) is explicitly performed on the image embeddings prior to prompting. 
 
+    result = model.visual_embs['leaders/obama'] - model.visual_embs['flags/usa'] + model.visual-embs['flags/germany']
+    prompt = [result, '[RET]']
+
 [EXAMPLE OF PROMPT WILL BE SHOWN HERE] @feedbackers: this means that the prompt consists of a single embedding, for instance computed by: embedding(image_Obama) - embedding(image_USA) + embedding(image_Germany) 
 
 (@Feedbackers: Examples can be seen in [example](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/example.ipynb) and in [arithmetic](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/visual_arithmetics/arithmetic.ipynb)).
 #### Zero-shot prompting 
 The following approach consists of textual prompts.
 
+    task = ['Task description: Finish the analogy.']
+    prompt = task + [['leaders/obama'], ' is to ', ['countries/usa'], ' as [RET] is to ', ['countries/germany']]
+
+#### Few-shot prompting
+    task = ['Task description: Finish the analogy.']
+    prefix = [
+        ['leaders/justin_trudeau'], ' is to ', ['countries/canada'], ' as ', ['leaders/putin'], ' is to ', ['countries/russia'],
+        ['leaders/putin'], ' is to ', ['countries/russia'], ' as ', ['leaders/xi_jinping'], ' is to ', ['countries/china'],
+        ['leaders/xi_jinping'], ' is to ', ['countries/china'], ' as ', ['leaders/justin_trudeau'], ' is to ', ['countries/canada']
+    ]
+    prompt = task + prefix + [['leaders/obama'], ' is to ', ['countries/usa'], ' as [RET] is to ', ['countries/germany']]
 
 #### Chain-of-Thought Prompting for Visual Arithmetic
 ADAPT THIS TO DISTINGUISH BETWEEN ZERO-SHOT (LET'S THINK STEP-BY-STEP), AND FEW-SHOT (PROVIDE INTERMEDIATE STEPS).
@@ -97,7 +111,11 @@ The resulting T-SNE plot reveals certain category intertanglements. One such int
 
 The confusion between *countries* and *flags* becomes evident not only in the T-SNE plot but also in the relations and images themselves. While Tewel et al. (2013) describe a relation *countries* -> *flags*, not all of the examples within this relation can be accurately expressed using the available images. For instance, since *Australia* is exclusively present in the *flags* category and not in *countries*, the example *Australia -> Canberra* can only be expressed as a *flags -> cities* relation.
 
-*(do we mention the confusion regarding number of images / number of relations?)*
+Additional remarks to benchmark dataset:
+- *(do we mention the confusion regarding number of images / number of relations?)*
+- "england" instead of "uk" *(not relevant for experiment)*
+- "leaders" do not reflect current world state, possible conflicts with world knowledge embedded in LLM
+- "england" and "usa" have three leaders each: {Boris Johnson, David Cameron, Queen Elizabeth} and {Barack Obama, Donald Trump, Hillary Clinton}
 
 ### Limitations of the retrieval dataset
 
