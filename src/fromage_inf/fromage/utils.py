@@ -26,7 +26,7 @@ def dump_git_status(out_file=sys.stdout, exclude_file_patterns=['*.ipynb', '*.th
 
 def get_image_from_url(url: str):
     session = requests.Session()
-    retry = Retry(connect=5, backoff_factor=0.9)
+    retry = Retry(connect=3, backoff_factor=0.3)
     adapter = HTTPAdapter(max_retries=retry)
     session.mount('http://', adapter)
     session.mount('https://', adapter)

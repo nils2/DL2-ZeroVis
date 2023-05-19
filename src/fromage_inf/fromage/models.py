@@ -293,6 +293,7 @@ class Fromage(nn.Module):
                                       ret_scale_factor: float = 1.0,
                                       top_p: float = 1.0,
                                       temperature: float = 0.0,
+                                      min_word_tokens: int = 0,
                                       max_num_rets: int = 1,
                                       max_img_per_ret: int = 1,
                                       font_dir='./res/'):
@@ -305,6 +306,7 @@ class Fromage(nn.Module):
       ret_scale_factor: Proportion to scale [RET] token logits by. A higher value may increase the probability of the model generating [RET] outputs.
       top_p: If set to < 1, the smallest set of tokens with highest probabilities that add up to top_p or higher are kept for generation.
       temperature: Used to modulate logit distribution.
+      min_word_tokens: Minimum number of words to generate before allowing a [RET] output.
       max_num_rets: Maximum number of images to return in one generation pass.
       max_img_per_ret: Maximum number of images to return for each [RET] token.
     Returns:
@@ -362,7 +364,7 @@ class Fromage(nn.Module):
             embeddings = embeddings / embeddings.norm(dim=-1, keepdim=True)  # (N, T, 256)
         elif num_words > 0:
             generated_ids, generated_embeddings, _ = self.model.generate(input_embs, num_words,
-              temperature=temperature, top_p=top_p, ret_scale_factor=ret_scale_factor)
+              temperature=temperature, top_p=top_p, min_word_tokens=min_word_tokens, ret_scale_factor=ret_scale_factor)
             embeddings = generated_embeddings[-1][:, input_embs.shape[1]:]
 
             # Truncate to newline.
@@ -425,7 +427,7 @@ class Fromage(nn.Module):
                         text = f"K={k}"
                         pos = (10, 10)
                         left, top, right, bottom = draw.textbbox(pos, text, font=font)
-                        draw.rectangle((left - 5, top - 5, right + 5, bottom + 5), fill="red")
+                        draw.rectangle((left - 5, top - 5, right + 5, bottom + 5), fill="white")
                         draw.text(pos, text, font=font, fill="black")
 
                         image_outputs.append([img, k])
@@ -434,6 +436,8 @@ class Fromage(nn.Module):
                     except UnidentifiedImageError:
                         pass
                     except requests.exceptions.ConnectionError:
+                        pass
+                    except requests.exceptions.TooManyRedirects:
                         pass
 
                 # caption = self.model.tokenizer.batch_decode(generated_ids[:, last_ret_idx:ret_idx],
