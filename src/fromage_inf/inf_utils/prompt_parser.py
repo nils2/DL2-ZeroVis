@@ -140,7 +140,7 @@ class PromptParser:
                     fig, ax = plt.subplots(1, len(output), figsize=(3 * len(output), 3))
                     for i, image in enumerate(output):
                         try:
-                            image = image.resize((224, 224))
+                            image = image.resize((224, 224), Image.ADAPTIVE)
                             image = image.convert('RGB')
                         except:
                             image = np.zeros((224, 224, 3), dtype=np.uint8)

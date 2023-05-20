@@ -424,10 +424,10 @@ class Fromage(nn.Module):
                         else:
                             font = ImageFont.load_default()
 
-                        text = f"K={k}"
-                        pos = (10, 10)
+                        text = f"K={k+1}"
+                        pos = (5, -2)
                         left, top, right, bottom = draw.textbbox(pos, text, font=font)
-                        draw.rectangle((left - 5, top - 5, right + 5, bottom + 5), fill="white")
+                        draw.rectangle((left-5, top-5, right+5, bottom+5), fill="white")
                         draw.text(pos, text, font=font, fill="black")
 
                         image_outputs.append([img, k])
@@ -438,6 +438,8 @@ class Fromage(nn.Module):
                     except requests.exceptions.ConnectionError:
                         pass
                     except requests.exceptions.TooManyRedirects:
+                        pass
+                    except requests.exceptions.Timeout:
                         pass
 
                 # caption = self.model.tokenizer.batch_decode(generated_ids[:, last_ret_idx:ret_idx],
