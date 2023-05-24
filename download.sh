@@ -17,7 +17,7 @@ fi
 if [ ! -f $benchmark_root/benchmark/cities/washington.jpg ]
 then
     echo "Downloading Visual Relations Dataset.."
-    gdown --fuzzy https://drive.google.com/file/d/1a8992QI5SpX0tu_HZVE6pZNBTtBSGnp-/view?usp=share_link
+    gdown --fuzzy https://drive.google.com/u/0/uc?id=1a8992QI5SpX0tu_HZVE6pZNBTtBSGnp-&export=download
     unzip benchmark.zip
     mv benchmark $benchmark_root/benchmark
     rm benchmark.zip

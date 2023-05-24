@@ -17,10 +17,11 @@ cd DL2-ZeroVis
 ```
 ### Step 2: Install dependencies
 ```
-conda install -f env.yml
+conda env create -f env.yml
 conda activate fromage
 ```
 ### Step 3: Download embeddings and evaluation data
+*Tip: Make sure you run it from the conda environment.*
 ```
 source ./download.sh
 ```
