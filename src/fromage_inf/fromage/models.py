@@ -442,12 +442,11 @@ class Fromage(nn.Module):
                     except requests.exceptions.Timeout:
                         pass
 
-                # caption = self.model.tokenizer.batch_decode(generated_ids[:, last_ret_idx:ret_idx],
-                #                                             skip_special_tokens=True)[0]
-                caption = ""
+                caption = self.model.tokenizer.batch_decode(generated_ids[:, last_ret_idx:ret_idx],
+                                                            skip_special_tokens=True)[0]
 
                 last_ret_idx = ret_idx + 1
-                # return_outputs.append(utils.truncate_caption(caption) + ' [RET]')
+                return_outputs.append(utils.truncate_caption(caption) + ' [RET]')
                 return_outputs.append([x[0] for x in image_outputs])
 
         return return_outputs
