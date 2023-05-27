@@ -5,5 +5,9 @@
 # the repo. Unless a later match takes precedence,
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
+*      @nils2
 
+/demos/    @nils2
+
+*.md        @nils2
 
