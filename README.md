@@ -1,12 +1,12 @@
-# Deep Learning 2 - Team 25
+# Exploring Visual Grounding in FROMAGe using Visual Arithmetics
 
 <center>
 <img alt="FROMAGe model architecture" src="https://raw.githubusercontent.com/kohjingyu/fromage/main/teaser.png" width="90%">
 </center>
 
-This is the repository of Team 25 of UvA Deep Learning 2 course in 2023. Here we explore the visual arithmetic capabilities of FROMAGe (Grounding Language Models to Images for Multimodal Generation)
+This is the repository of Team 25 of UvA Deep Learning 2 course in 2023. Here we explore the visual arithmetic capabilities of FROMAGe (Grounding Language Models to Images for Multimodal Generation).
 
-[[FROMAGe]](https://github.com/kohjingyu/fromage) [[Blogpost]](https://github.com/kohjingyu/fromage)
+[[Our Blogpost]](https://https://github.com/nils2/DL2-ZeroVis/blob/main/blogpost.md) | [[FROMAGe git]](https://github.com/kohjingyu/fromage) | [[FROMAGe paper]](https://arxiv.org/abs/2301.13823)
 
 ## Installation
 
@@ -25,25 +25,20 @@ conda activate fromage
 ```
 source ./download.sh
 ```
-This script downloads the visual relations dataset and saves it under ????.
+This script downloads the visual relations dataset and saves it under the 'src/' directory.
 
 ## Running
 
-We recommend the following notebooks to analyse FROMAGe:
+We recommend the following notebooks to analyse the visual analogy resolution capabilities of FROMAGe:
 
-Retrieval: 
-[[empty_link1]]() [[empty_link2]]() [[empty_link3]]()
+ZeroCap comparison:
+[arithmetic_icap_greedy](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Visual-Arithmetics/Image-to-Text/arithmetic_ICap_greedy.ipynb)
 
-Chain of Thought: 
-[[empty_link1]]() [[empty_link2]]() [[empty_link3]]()
+Visual arithmetics:
+[arithmetic_itret](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Visual-Arithmetics/Image-to-Image/arithmetic_ITRet.ipynb)
 
+Explainability of the Visual Relations benchmark:
+[explainability](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Extra-Studies/Availability/img-to-txt/ICap_greedy.ipynb)
 
-<!---
-- Place the [cc3m_embeddings](https://drive.google.com/file/d/1wMojZNqEwApNlsCZVvSgQVtZLgbeLoKi/view) in the "src/fromage_inf/fromage_model" folder as done in [fromage](https://github.com/kohjingyu/fromage).
-- Place the [Visual Relations benchmark](https://drive.google.com/file/d/1hf5_zPI3hfMLNMTllZtWXcjf6ZoSTGcI/edit) dataset, from the [ZeroCap](https://github.com/YoadTew/zero-shot-image-to-text) paper, as a folder "benchmark" in directory "src".
-@@ -13,4 +52,6 @@ Below only needed when not using the fromage_inf folder.
-including downloading the cc3m_embeddings as explained in the same github page.
-Load in the OPT and CLIP models using fp16, to ensure they fit in lisa/locally.
-This is done in fromage_main/fromage/models.py FromageModel self.lm and self.visual_model.)
-This is done in fromage_main/fromage/models.py FromageModel self.lm and self.visual_model.)
--->
+t-SNE space:
+[TSNE](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Extra-Studies/t-SNE.ipynb)

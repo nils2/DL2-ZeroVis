@@ -1,6 +1,6 @@
 # This is a SYNHCRONOUS download for bash script
 # otherwise bash script would skip over download command
-# right after starting it
+# right after starting it.
 
 import gdown
 import sys
