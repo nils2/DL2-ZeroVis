@@ -29,16 +29,16 @@ This script downloads the visual relations dataset and saves it under the 'src/'
 
 ## Running
 
-We recommend the following notebooks to analyse the visual analogy resolution of FROMAGe:
+We recommend the following notebooks to analyse the visual analogy resolution capabilities of FROMAGe:
 
 ZeroCap comparison:
-[arithmetic_greedy](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/visual_arithmetics/imgs2t/arithmetic_greedy.ipynb)
+[arithmetic_icap_greedy](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Visual-Arithmetics/Image-to-Text/arithmetic_ICap_greedy.ipynb)
 
 Visual arithmetics:
-[arithmetic_ret](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/visual_arithmetics/imgs2i/arithmetic_ret.ipynb)
+[arithmetic_itret](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Visual-Arithmetics/Image-to-Image/arithmetic_ITRet.ipynb)
 
-Explainability:
-[explainability_greedy](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/extra_studies/availability/img-to-txt/explainability_greedy.ipynb)
+Explainability of the Visual Relations benchmark:
+[explainability](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Extra-Studies/Availability/img-to-txt/ICap_greedy.ipynb)
 
-TSNE:
-[TSNE](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/extra_studies/t-sne.ipynb)
+t-SNE space:
+[TSNE](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Extra-Studies/t-SNE.ipynb)
