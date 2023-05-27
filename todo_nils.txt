@@ -1,0 +1,5 @@
+-Fix readme story
+
+-Write essay
+
+-Fix references for blogpost
