@@ -32,7 +32,7 @@ FROMAGe retrieves images using an autoregressive language model. However, this m
 
 ### Training Setup 
 
-As mentioned previously, FROMAGe employs a multi-task objective for training, which includes image captioning and image-text retrieval.  An overview of both training pipelines is depicted in Figure X.
+As mentioned previously, FROMAGe employs a multi-task objective for training, which includes image captioning and image-text retrieval.  An overview of both training pipelines is depicted here:
 
 ![](./img/fromage.png)
 
