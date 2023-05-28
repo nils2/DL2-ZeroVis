@@ -411,9 +411,9 @@ Despite initial expectations, the method of direct prompting in the ZeroVisMulti
 
 ## Summary
 
-* Building upon the foundational paper that introduced FROMAGe, some novel insights into its visual arithmetic capabilities have been shown. Although unable to perform the analogy resolution as expected, some findings were promissing. Where some of the inherent limitations of fromage mentioned to be removed the model might be able to perform the analogy. 
-* Evaluating the impact of latent zero-shot in-context learning abilities of large language models (LLMs) on visual arithmetic.
-* Demonstrating the influence of multimodal inputs on visual arithmetic. We furnish a deeper understanding of the interaction between different modalities in multimodal models, especially in tasks they are not trained on. The insights derived from this exploration bear significant implications for how multimodal models should be trained and utilized.
+* Building upon the foundational paper that introduced FROMAGe, some novel insights into its visual arithmetic capabilities have been shown. Although unable to perform the analogy resolution as expected, findings pertaining to the generation of text prior to image retrieval were promising. 
+* Evaluation of the impact of latent zero-shot in-context learning abilities of large language models (LLMs) on visual arithmetic.
+* Demonstrated the influence of multimodal inputs on visual arithmetic. We furnish a deeper understanding of the interaction between different modalities in multimodal models, especially in tasks they are not trained on.
 
 ## Limitations of the Benchmark
 
