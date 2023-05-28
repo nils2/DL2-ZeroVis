@@ -68,12 +68,12 @@ To demonstrate the multimodal reasoning of their model, Tewel et al. study its c
 > vector("King") - vector("Man") + vector("Woman") ~ vector("Queen")
 
 Tewel et al. extend this idea to the visual domain and show that their model is able to solve a similar task with images:
-![](https://hackmd.io/_uploads/B15aJFlI3.png)
+![](./img/young_queen_zerocap.ipynb)
 
 
 As a closely related task, they propose to generate real-world knowledge using the relations between images. As an example, they formulate the question *"Who is the president of Germany?"* as an arithmetical expression. They create a "presidential direction" by subtracting the embedding of an image of Obama from the embedding of an image of the USA's flag, and then add the embedding of an image of Germany's flag. They then use the resulting embedding vector as an input for the language model, which generates "Angela Merkel":
 
-![](https://hackmd.io/_uploads/ryUbxFlI3.png)
+![](./img/angela_merkel_zerocap.ipynb)
 
 
 
@@ -107,9 +107,7 @@ The simplest approach is that inspired by Word2Vec, where the analogy resolution
     prompt = [result]
 To directly compare this method to ZeroCap, only textual output is generated. In this approach, the captioning pipeline is employed.  Though the main objective during image captioning was not to generate the [RET] token, the model is capable of doing so. For this reason we set the RET scaling factor to 0, ensuring [RET] is not generated and no retrieval is performed. The precalulated embedding is fed to the LLM as the visual prefix, with no other tokens. The model then generates text representations of up to five tokens based on the prefix.
 
-
-
-
+![](./img/ZeroVisText.jpeg)
 
 ### Image-to-Image: Beyond textual output (ZeroVisImage)
 
@@ -120,10 +118,9 @@ The next approach is very similar to the previous one, except we retrieve images
     
 Next, the input sequence is passed through the language model, which generates output representations. To map these representations to the visual space for retrieval, the representation of the [RET] token from the last hidden layer of the language model is fed through the $W_t$ layer.
 
-
 Finally, the resulting embedding is compared to the precomputed embeddings of the CC3M images using normalized cosine similarity. Based on the computed similarity, the top three images are retrieved as the resolution to the visual analogy.
 
-
+![](./img/ZeroVisImage.jpeg)
 
 ### Image-to-Image: Multimodal prompting (ZeroVisMulti)
 
@@ -138,9 +135,7 @@ The LLM then generates text representations based on the input, ending in a [RET
 
 In the same manner as previously described, the resulting embedding is compared to the precomputed embeddings and the three most similar images are retrieved.
 
-
-
-[Figure X visualizing how the model does the above]
+![](./img/ZeroVisMulti.jpeg)
 
 ## Results
 
@@ -277,26 +272,26 @@ We find that, from time to time, the model is capable of correctly resolving the
 * Paris (featuring the Eiffel Tower)
 
 > flags/england + (cities/paris - flags/france)
-![](https://hackmd.io/_uploads/BJ7oEjRB3.png)
+![](./img/EPF-london.png)
 
 > flags/england + (cities/washington - flags/usa)
-![](https://hackmd.io/_uploads/Hk7j4iCBh.png)
+![](./img/EWU-london.png)
 
 > flags/england + (leaders/angela_merkel - flags/germany)
-![](https://hackmd.io/_uploads/rymi4oCHh.png)
+![](./img/EAG-boris.png)
 
 > flags/france + (cities/tokyo - flags/japan)
-![](https://hackmd.io/_uploads/B1sJSjRr2.png)
+![](./img/FTJ-paris.png)
 
 In another example, where the analogy should yield Tokyo, the model correctly finds two images of Tokyo (featuring the Rainbow Bridge), while the third image retrieved shows the main tower of Osaka Castle (located in Osaka), which - depending on the perspective - resembles the Ken'ey-ji temple in Tokyo.
 
 > flags/japan + (cities/berlin - flags/germany)
-![](https://hackmd.io/_uploads/ryugriRS2.png)
+![](./img/JBG-tokyo.png)
 
 Another example worthwhile to mention closely misses the expected result, an image of Canberra. Instead, two images feature the Uluru rock (located in central Australia), and the third image features the Sydney Opera House. Given that Tewel et al. report the same confusion with their model, we can assume that the benchmark's "capital direction" actually is interpreted as a "most characteristic city direction".
 
 > flags/australia + (cities/cairo - flags/egypt)
-![](https://hackmd.io/_uploads/B1dVVjCBh.png)
+![](./img/ACE-canberra.png)
 
 One might have observed in the previous examples that the retrieved images for each analogy usually bear a strong visual resemblance to one another. This similarity is further demonstrated in the subsequent examples, where FROMAGe retrieves:
 
@@ -308,25 +303,23 @@ One might have observed in the previous examples that the retrieved images for e
 
 
 > building/china_wall + (countries/egypt - building/pyramid)
-![](https://hackmd.io/_uploads/rytaNoCr2.png)
+![](./img/CEP-china.png)
 
 > flags/usa + (cities/bangkok - flags/thailand)
-![](https://hackmd.io/_uploads/Skr5Bj0r3.png)
+![](./img/UBT-washington.png)
 
 > flags/england + (cities/cairo - flags/egypt)
-![](https://hackmd.io/_uploads/Hyu84jCHh.png)
+![](./img/ECE-london.png)
 
 > flags/cuba + (cities/bangkok - flags/thailand)
-![](https://hackmd.io/_uploads/r12wmiAHn.png)
+![](./img/CBT-havana.png)
 
 > flags/russia + (cities/bangkok - flags/thailand)
-![](https://hackmd.io/_uploads/rJVUHiASh.png)
+![](./img/RBT-moscow.png)
 
 In conclusion, FROMAGe is, in some cases, capable  of resolving the analogies and retrieving at least some images of the corresponding solution.  In the majority of the cases, however, the retrieved images do not coincide with the expected output. It is worthwhile to mention that the three retrieved images typically exhibit visual similarity.
 
-For more information, including prompt and outputs, we refer the reader to (insert link to imgs2i/arithmetic_ret).
-
-
+For more information, including prompt and outputs, we refer the reader to this [notebook](./demos/Visual-Arithmetics/Image-to-Image/arithmetic_ITRet.ipynb).
 
 ### Image-to-Image: Multimodal Prompting (ZeroVisMulti)
 
@@ -341,44 +334,44 @@ In the subsequent examples, it's observed that while the model primarily leans o
 
 > [building/china_wall] is to [contries/china], as [building/capitol] is to
 generated output: *iaf map of the country with the flag in the background [RET]*
-![](https://hackmd.io/_uploads/HyFT4iCB2.png)
+![](./img/CCC-usa.png)
 
 > [flags/egypt] is to [cities/cairo], as [flags/england] is to
 generated output:  *iphone app [RET]*
-![](https://hackmd.io/_uploads/SyXgvoArh.png)
+![](./img/ECE-london-iphone.png)
 
 > [flags/usa] is to [cities/washington], as [flags/australia] is to
 generated output:  *ive been a great country for a long time and i think it will continue to be a great country [RET]*
-![](https://hackmd.io/_uploads/SyXgDs0S2.png)
+![](./img/UWA-canberra.png)
 
 > [flags/china] is to [cities/beijing], as [flags/germany] is to
 generated output:  *ive been a country for a long time, but it is now a country in the hands of the chinese government [RET]*
-![](https://hackmd.io/_uploads/BymlvsRHn.png)
+![](./img/CBG-berlin.png)
 
 
 Contrasting to cases where the retrieval is primarily based on the input prompt, we find other cases where heavy emphasis is placed on the model-generated text. Here, while the analogy would resolve to Washington, the model generates a sequence containing *"the most popular destinations for tourists"*, subsequently retrieving images of Paris and London:
 
 > [flags/france] is to [cities/paris], as [flags/usa] is to
 generated output:  *ive been to the top of the most popular destinations for tourists [RET]*
-![](https://hackmd.io/_uploads/rkup4iCBn.png)
+![](./img/FPU-washington.png)
 
 Note how the ability of generating text before retrieving images enables the model to reason about the prompt and then retrieve the images based on this reasoning. The following unconventional result illustrates this "cognitive approach". The model's input includes [flag/japan], leading the model to generate *"ia flag with the sun in the sky"* (a description fitting the Japanese flag). However, image retrieval based on this phrase results in a literal interpretation, consequently producing images of the American flag positioned against a sunlit sky:
 
 > [flags/germany] is to [cities/berlin], as [flags/japan] is to
 generated output:  *is flag with the sun in the sky [RET]*
-![](https://hackmd.io/_uploads/BJu2VoCHh.png)
+![](./img/GBJ-tokyo.png)
 
 While some of the retrieved images can clearly be attributed to either the prompt or the prefix, the model sometimes manages to pick up on cues of both. Here, the model retrieves images of gold medals after hallucinating text containing the phrase *"a gold medal"*.  Interestingly, it's worth noting that [flags/thailand] is part of the prompt and prompts the model to retrieve medals featuring ribbons that, coincidentally, bear the Thai flag.
 
 > [flags/thailand] is to [cities/bangkok], as [flags/australia] is to
 generated output:  *ive been to the country to get a country to get a gold medal [RET]*
-![](https://hackmd.io/_uploads/BJl64oAS3.png)
+![](./img/TBA-canberra.png)
 
 A similar pattern is observed in the following example. It retrieves images of countries and cities on earth, influenced by the generated text. However, in two out of three images, China is in the center, arguably due to the inclusion of [flags/china] in the prompt.
 
 > [flags/australia] is to [cities/canberra], as [flags/china] is to
 generated output:  *ive been to all the countries in the world [RET]*
-![](https://hackmd.io/_uploads/SyuVviAH2.png)
+![](./img/ACC-beijing.png)
 
 While the retrieval of images is primarily influenced by cues present in the prompt and the prefix, there are instances where the model effectively retrieves images corresponding to the intended solution of the analogy.
 
@@ -386,18 +379,18 @@ For instance, in a situation where the analogy should ideally result in the repr
 
 > [CEOs/mark_zuckerberg] is to [companies/facebook], as [CEOs/steve_jobs] is to
 generated output: *iphone app [RET]*
-![](https://hackmd.io/_uploads/Skz3Es0r2.png)
+![](./img/MFS-apple.png)
 
 Similarly, in this case, the model generates the phrase "ive been a great president" The presence of the word "president" indeed influences the model to retrieve images of Barack Obama. However, it's essential to point out that this particular analogy presents an unusual scenario in which the direction toward a president (from [flags/usa] to [leaders/trump]) is constructed using the same country featured in the second part of the analogy ([flags/usa] and the expected result being a US leader).
 
 > [flags/usa] is to [leaders/trump], as [flags/usa] is to
 generated output:  *ive been a great president [RET]*
-![](https://hackmd.io/_uploads/rJy7vjCB2.png)
+![](./img/UTU-hillary.png)
 
 In conclusion, despite initial expectations, the method of direct prompting often yields less satisfactory outcomes in terms of resolving analogies. Instead, the model picks up on cues encountered in the prompt, generates a probable text sequence, and retrieves images based on both the prompt and the generated prefix.
 
 
-For more information, including prompt and outputs, we refer the reader to (insert link to imgs2i/zero-shot_greedy).
+For more information, including prompt and outputs, we refer the reader to this [notebook](./demos/Visual-Arithmetic/Image-to-Image/zero-shot_ICap_greedy.ipynb).
 
 ## Limitations of FROMAGe
 
@@ -445,7 +438,7 @@ Joy: I would just keep this as bulletpoints with our contributions.
 
 In addition to its small size, the Visual Relations benchmark possesses a notable shortcoming in terms of category definition. To illustrate this, we employ t-Distributed Stochastic Neighbor Embedding (T-SNE) (Van der Maaten et al., 2008). T-SNE is a non-linear dimensionality reduction algorithm known for its ability to preserve local structure within high-dimensional datasets. It calculates the similarity of data points in a high-dimensional space and maps them into a lower-dimensional (in our case, two-dimensional) space by leveraging gradient descent to minimize the Kullback-Leibler divergence between the different dimensionalities. We apply T-SNE to the embeddings after encoding the benchmark's images with the ViT.
 
-![](https://hackmd.io/_uploads/H1lxC5l82.png)
+![](./img/tsne.svg)
 
 As is apparent in the T-SNE plot, there are two overlapping clusters (*countries* with *flags* and *cities* with *buildings*). We attribute these overlaps to the fact that the images representing countries feature the country's flag and the images representing cities feature characteristic buildings located in the city in question. A contrastive example of closely related but non-overlapping clusters is the one of leaders and CEOs. The minimal distinctions between the overlapping categories, especially in the striking case of *countries* and *flags*, might not be picked up by vision-language models, wherefore we question the rationale behind the separate handling of these categories.
 
@@ -510,7 +503,7 @@ While evaluating the outputs qualitatively, we observed some consistent associat
 
 > [flags/england] is to [leaders/boris_johnson], as [flags/russia] is to
 generated output:  *ive been a long time favorite of the flag [RET]*
-![](https://hackmd.io/_uploads/HJvUDoRH3.png)
+![](./img/EBR-putin.png)
 
 Contrasting to these very clear examples, in some cases, the model retrieves more diverse images which still relate to the prompt, although to a lesser extent. In the following example, the model retrieves 
 * the flag of Australia (which can be conceptually related to the British flag)
@@ -519,7 +512,7 @@ Contrasting to these very clear examples, in some cases, the model retrieves mor
 
 > [flags/england] is to [leaders/boris_johnson], as [flags/usa] is to
 generated output:  *ive been saying [RET]*
-![MAGA](https://hackmd.io/_uploads/rJNSPiABn.png)
+![](./img/EBU-obama.png)
 
 ### B: Extra studies
 
