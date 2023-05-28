@@ -1,8 +1,5 @@
 # Exploring Visual Grounding in FROMAGe using Visual Arithmetics
 
-## Abstract
-*Do we add an abstract? Or maybe add a paragraph to the introduction that explains "In this work, we investigate X in FROMAGe using the VR benchmark..."*?
-
 ## Introduction
 
 Recent advancements in Artificial Intelligence owe much of their success to the rapidly evolving field of Language Modelling. Large Language Models (LLM) are trained on extensive text corpora and showcase impressive capabilities, such as generating human-like dialogue, answering complex questions, and learning new tasks from minimal examples. However, can a model solely focused on language truly be considered "intelligent"?
@@ -11,11 +8,9 @@ One way to adapt a model to another domain is through grounding. In the case of 
 
 The field of vision-language models has seen several approaches, each exploring different methods to achieve multimodal integration. Among these approaches, an efficient and promising framework called FROMAGe (Frozen Retrieval Over Multimodal Data for Autoregressive Generation) stands out.
 
-
 ## Unveiling the Architecture of FROMAGe: A Fusion of Vision and Language 
 
 FROMAGe (Koh et al., 2023) employs a pretrained language model and a pretrained visual encoder, both kept frozen, to ground language models visually. This grounding is achieved by appending various linear mapping layers to align the pretrained models, and training the combined model with a multitask objective for image captioning and image-text retrieval. 
-
 
 ### The Main Building Blocks
 
@@ -34,7 +29,6 @@ For image captioning, the model learns a linear mapping $\mathbf{W}_c$ to transf
 #### Text-to-Image Mapping 
 
 FROMAGe retrieves images using an autoregressive language model. However, this model's causal attention over text is less expressive than bidirectional attention. To address this, a special [RET] token is added to the language model's vocabulary. During training, the [RET] token is appended to input captions, enabling an additional step of attention and creating a stronger text representation. The [RET] token also facilitates image retrieval. To map the language model's output to the visual space, the hidden representation of the [RET] token is passed through a linear mapping $\mathbf{W}_t$. The intuition behind this is to obtain the hidden representations that lead to the outputting of the [RET] token, as these will be most informative for retrieval. Similarly, a linear mapping $W_i$ is trained to map visual embeddings to the same retrieval space.
-
 
 ### Training Setup 
 
@@ -298,7 +292,6 @@ One might have observed in the previous examples that the retrieved images for e
 * While the model accurately retrieves an image of Havana, the remaining two images, although not representing Havana, are characterized by a similar color scheme.
 * In a similar manner, the model successfully retrieves an image of Moscow, while the other two images, despite not being of Moscow, depict buildings with similar architectural features. 
 
-
 > building/china_wall + (countries/egypt - building/pyramid)
 ![](./img/CEP-china.png)
 
@@ -322,7 +315,6 @@ For more information, including prompt and outputs, we refer the reader to this 
 
 In the third experiment, the FROMAGe model is directly prompted using the analogy. For each of the following examples, we present the given prompt, the text that the model generates in response, and the top three images that are retrieved.
 
-
 In the subsequent examples, it's observed that while the model primarily leans on the prompt for image retrieval, it also incorporates elements of the generated text:
 * In a scenario where the aim is to retrieve images representing the USA, the model retrieves images of China, given its mention in the analogy (note that the model again confuses Vietnam with China due to the image representations' similarity). The retrieved images are all of the country's border shape with an overlay of the flag, mirroring the generated text - 'map of the country with the flag in the background'.
 * When the analogy's first component is '[flags/egypt]', the model retrieves images of the Egyptian flag. Interestingly, the model generates the text *"iPhone app"*, and consequently retrieves images of the Egyptian flag with shapes reminiscent of mobile apps.
@@ -330,44 +322,44 @@ In the subsequent examples, it's observed that while the model primarily leans o
 * When '[flags/china]' is the first component of the analogy, the model retrieves images of the Chinese flag. The model generates text that can be interpreted to reference China's long history and the governance of the Chinese government.
 
 > [building/china_wall] is to [contries/china], as [building/capitol] is to
-> generated output: *iaf map of the country with the flag in the background [RET]*
+> generated output: *iaf map of the country with the flag in the background [RET]*\
 ![](./img/CCC-usa.png)
 
 > [flags/egypt] is to [cities/cairo], as [flags/england] is to
-> generated output:  *iphone app [RET]*
+> generated output:  *iphone app [RET]*\
 ![](./img/ECE-london-iphone.png)
 
 > [flags/usa] is to [cities/washington], as [flags/australia] is to
-> generated output:  *ive been a great country for a long time and i think it will continue to be a great country [RET]*
+> generated output:  *ive been a great country for a long time and i think it will continue to be a great country [RET]*\
 ![](./img/UWA-canberra.png)
 
 > [flags/china] is to [cities/beijing], as [flags/germany] is to
-> generated output:  *ive been a country for a long time, but it is now a country in the hands of the chinese government [RET]*
+> generated output:  *ive been a country for a long time, but it is now a country in the hands of the chinese government [RET]*\
 ![](./img/CBG-berlin.png)
 
 
 Contrasting to cases where the retrieval is primarily based on the input prompt, we find other cases where heavy emphasis is placed on the model-generated text. Here, while the analogy would resolve to Washington, the model generates a sequence containing *"the most popular destinations for tourists"*, subsequently retrieving images of Paris and London:
 
 > [flags/france] is to [cities/paris], as [flags/usa] is to
-> generated output:  *ive been to the top of the most popular destinations for tourists [RET]*
+> generated output:  *ive been to the top of the most popular destinations for tourists [RET]*\
 ![](./img/FPU-washington.png)
 
 Note how the ability of generating text before retrieving images enables the model to reason about the prompt and then retrieve the images based on this reasoning. The following unconventional result illustrates this "cognitive approach". The model's input includes [flag/japan], leading the model to generate *"ia flag with the sun in the sky"* (a description fitting the Japanese flag). However, image retrieval based on this phrase results in a literal interpretation, consequently producing images of the American flag positioned against a sunlit sky:
 
 > [flags/germany] is to [cities/berlin], as [flags/japan] is to
-> generated output:  *is flag with the sun in the sky [RET]*
+> generated output:  *is flag with the sun in the sky [RET]*\
 ![](./img/GBJ-tokyo.png)
 
 While some of the retrieved images can clearly be attributed to either the prompt or the prefix, the model sometimes manages to pick up on cues of both. Here, the model retrieves images of gold medals after hallucinating text containing the phrase *"a gold medal"*.  Interestingly, it's worth noting that [flags/thailand] is part of the prompt and prompts the model to retrieve medals featuring ribbons that, coincidentally, bear the Thai flag.
 
 > [flags/thailand] is to [cities/bangkok], as [flags/australia] is to
-> generated output:  *ive been to the country to get a country to get a gold medal [RET]*
+> generated output:  *ive been to the country to get a country to get a gold medal [RET]*\
 ![](./img/TBA-canberra.png)
 
 A similar pattern is observed in the following example. It retrieves images of countries and cities on earth, influenced by the generated text. However, in two out of three images, China is in the center, arguably due to the inclusion of [flags/china] in the prompt.
 
 > [flags/australia] is to [cities/canberra], as [flags/china] is to
-> generated output:  *ive been to all the countries in the world [RET]*
+> generated output:  *ive been to all the countries in the world [RET]*\
 ![](./img/ACC-beijing.png)
 
 While the retrieval of images is primarily influenced by cues present in the prompt and the prefix, there are instances where the model effectively retrieves images corresponding to the intended solution of the analogy.
@@ -375,13 +367,13 @@ While the retrieval of images is primarily influenced by cues present in the pro
 For instance, in a situation where the analogy should ideally result in the representation of the company 'Apple', the model aptly interprets the analogy, generating the phrase 'iphone app' and consequently retrieves images of iPhones. While this seems like a promising result, it is important to mention that the phrase *"iphone app"* is generated on multiple occasions, even when Apple is not the anticipated result.
 
 > [CEOs/mark_zuckerberg] is to [companies/facebook], as [CEOs/steve_jobs] is to
-> generated output: *iphone app [RET]*
+> generated output: *iphone app [RET]*\
 ![](./img/MFS-apple.png)
 
 Similarly, in this case, the model generates the phrase "ive been a great president" The presence of the word "president" indeed influences the model to retrieve images of Barack Obama. However, it's essential to point out that this particular analogy presents an unusual scenario in which the direction toward a president (from [flags/usa] to [leaders/trump]) is constructed using the same country featured in the second part of the analogy ([flags/usa] and the expected result being a US leader).
 
 > [flags/usa] is to [leaders/trump], as [flags/usa] is to
-> generated output:  *ive been a great president [RET]*
+> generated output:  *ive been a great president [RET]*\
 ![](./img/UTU-hillary.png)
 
 In conclusion, despite initial expectations, the method of direct prompting often yields less satisfactory outcomes in terms of resolving analogies. Instead, the model picks up on cues encountered in the prompt, generates a probable text sequence, and retrieves images based on both the prompt and the generated prefix.
@@ -499,7 +491,7 @@ Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013). Efficient estimation of w
 While evaluating the outputs qualitatively, we observed some consistent associations, whose foundation we can only assume. For instance, when [flags/england] is incorporated into the prompt, the Brunei flag appears in the retrieved images on multiple occasions. However, there is no visual correlation between the flags, and the historical connection—Brunei being a British protectorate from 1888 to 1983—appears to be tenuous.
 
 > [flags/england] is to [leaders/boris_johnson], as [flags/russia] is to
-> generated output:  *ive been a long time favorite of the flag [RET]*
+> generated output:  *ive been a long time favorite of the flag [RET]*\
 ![](./img/EBR-putin.png)
 
 Contrasting to these very clear examples, in some cases, the model retrieves more diverse images which still relate to the prompt, although to a lesser extent. In the following example, the model retrieves 
@@ -508,7 +500,7 @@ Contrasting to these very clear examples, in some cases, the model retrieves mor
 * a red baseball cap with the words "Make America Great Again", which be based either on [flags/usa] in the input or the actual expected result (a US-american leader)
 
 > [flags/england] is to [leaders/boris_johnson], as [flags/usa] is to
-> generated output:  *ive been saying [RET]*
+> generated output:  *ive been saying [RET]*\
 ![](./img/EBU-obama.png)
 
 ### B: Extra studies
