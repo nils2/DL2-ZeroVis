@@ -6,7 +6,7 @@
 
 This is the repository of Team 25 of UvA Deep Learning 2 course in 2023. Here we explore the visual arithmetic capabilities of FROMAGe (Grounding Language Models to Images for Multimodal Generation).
 
-[[Our Blogpost]](https://https://github.com/nils2/DL2-ZeroVis/blob/main/blogpost.md) | [[FROMAGe git]](https://github.com/kohjingyu/fromage) | [[FROMAGe paper]](https://arxiv.org/abs/2301.13823)
+[[Our Blogpost]](https://github.com/nils2/DL2-ZeroVis/blob/main/blogpost.md) | [[FROMAGe git]](https://github.com/kohjingyu/fromage) | [[FROMAGe paper]](https://arxiv.org/abs/2301.13823)
 
 ## Installation
 
