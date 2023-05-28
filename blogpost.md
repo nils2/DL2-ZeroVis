@@ -410,14 +410,8 @@ With the ZeroVisImage approach, no textual input is provided to the LLM. Instead
 Despite initial expectations, the method of direct prompting in the ZeroVisMulti approach often yielded less satisfactory outcomes in terms of resolving analogies. As mentioned previously, the underlying LLM isn't specifically trained to follow instructions, hence it typically produces a probable continuation of the given prompt. Nevertheless, there is evidence suggesting that text generation could be advantageous, particularly with a model that's tuned to follow instructions. Generating text before initiating image retrieval provides the model with an opportunity to interpret the analogy, which means that image retrieval isn't solely based on visual similarity, as observed in the ZeroVisImage method. By doing so, the model can incorporate information that's semantically relevant from the language model, alongside visually relevant data from the visual encoder. This holistic approach has the potential to lead to more accurate resolution of analogies.
 
 ## Summary
-Joy: I would just keep this as bulletpoints with our contributions. 
-*(Summary of experiment, three approaches, contributions)*
 
-* test fromage
-* do visual arithmetics with visual output
-* do visual arithmetics with prompting
-
-* Building upon the foundational paper that introduced FROMAGe, by offering novel insights into its visual arithmetic capabilities. Our findings will illustrate whether the model can successfully execute complex visual arithmetic operations, thereby broadening our comprehension of FROMAGe's functionality and potential applications.
+* Building upon the foundational paper that introduced FROMAGe, some novel insights into its visual arithmetic capabilities have been shown. Although unable to perform the analogy resolution as expected, some findings were promissing. Where some of the inherent limitations of fromage mentioned to be removed the model might be able to perform the analogy. 
 * Evaluating the impact of latent zero-shot in-context learning abilities of large language models (LLMs) on visual arithmetic.
 * Demonstrating the influence of multimodal inputs on visual arithmetic. We furnish a deeper understanding of the interaction between different modalities in multimodal models, especially in tasks they are not trained on. The insights derived from this exploration bear significant implications for how multimodal models should be trained and utilized.
 
