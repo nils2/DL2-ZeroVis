@@ -97,7 +97,7 @@ The simplest approach is that inspired by Word2Vec, where the analogy resolution
 
 To directly compare this method to ZeroCap, only textual output is generated. In this approach, the captioning pipeline is employed.  Though the main objective during image captioning was not to generate the [RET] token, the model is capable of doing so. For this reason we set the RET scaling factor to 0, ensuring [RET] is not generated and no retrieval is performed. The precalulated embedding is fed to the LLM as the visual prefix, with no other tokens. The model then generates text representations of up to five tokens based on the prefix.
 
-![](./img/ZeroVisText.jpeg)
+![](./img/ZeroVisText.png)
 
 ### Image-to-Image: Beyond textual output (ZeroVisImage)
 
@@ -110,7 +110,7 @@ Next, the input sequence is passed through the language model, which generates o
 
 Finally, the resulting embedding is compared to the precomputed embeddings of the CC3M images using normalized cosine similarity. Based on the computed similarity, the top three images are retrieved as the resolution to the visual analogy.
 
-![](./img/ZeroVisImage.jpeg)
+![](./img/ZeroVisImage.png)
 
 ### Image-to-Image: Multimodal prompting (ZeroVisMulti)
 
@@ -124,7 +124,7 @@ The LLM then generates text representations based on the input, ending in a [RET
 
 In the same manner as previously described, the resulting embedding is compared to the precomputed embeddings and the three most similar images are retrieved.
 
-![](./img/ZeroVisMulti.jpeg)
+![](./img/ZeroVisMulti.png)
 
 ## Results
 
