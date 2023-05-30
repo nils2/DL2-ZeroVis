@@ -54,14 +54,14 @@ Notably, only the linear mappings and the [RET] embedding vector are updated dur
 
 Visual arithmetic tasks provide an interesting paradigm for exploring the grounding capabilities of multimodal language models. These tasks involve the ability to comprehend, reason, and make decisions based on visual inputs - a challenge that requires a deep level of grounding in the visual world. 
 
-To evaluate FROMAGe's visual grounding, we leverage the Visual Relations benchmark proposed by Tewel et al. They propose the ZeroCap method, which combines CLIP (Radford et al., 2021) and GPT-2 (Radford et al., 2021) without additional finetuning. Their experimental model has the potential of providing zero-shot captioning, bringing together a realistic textual variability, recognition abilities independent from object categories, and real-world knowledge embedded in the two models.
+To evaluate FROMAGe's visual grounding, we leverage the Visual Relations benchmark proposed by Tewel et al. (2022). They propose the ZeroCap method, which combines CLIP (Radford et al., 2021) and GPT-2 (Radford et al., 2019) without additional finetuning. Their experimental model has the potential of providing zero-shot captioning, bringing together a realistic textual variability, recognition abilities independent from object categories, and real-world knowledge embedded in the two models.
 
 
 ### Visual Arithmetics
-To demonstrate the multimodal reasoning of their model, Tewel et al. study its capabilities in visual-semantic arithmetics. Their proposed task is inspired by the famous examples introduced by Mikolov et al. In their word2vec paper, they show that simple algebraic operations performed on word embeddings can reveal semantic relations between the words they encode.
+To demonstrate the multimodal reasoning of their model, Tewel et al. (2022) study its capabilities in visual-semantic arithmetics. Their proposed task is inspired by the famous examples introduced by Mikolov et al. In their word2vec paper, they show that simple algebraic operations performed on word embeddings can reveal semantic relations between the words they encode.
 > vector("King") - vector("Man") + vector("Woman") ~ vector("Queen")
 
-Tewel et al. extend this idea to the visual domain and show that their model is able to solve a similar task with images:
+Tewel et al. (2022) extend this idea to the visual domain and show that their model is able to solve a similar task with images:
 ![](./img/young_queen_zerocap.png)
 
 
@@ -81,7 +81,7 @@ To allow the visual reasoning abilities of multimodal models to be tested, Tewel
 These templates are specifically chosen for their many-to-one association, exemplified by the fact that a country can host a myriad of buildings, yet each building typically pertains to a single country.
 
 ### Extending Benchmark Possibilities: FROMAGe's Capability for Image Retrieval
-Although Tewel et al. show that their model is able to use text strings instead of visual input (by replacing images in the equations with strings), the benchmark, as proposed in the ZeroCap paper, is formulated as applying arithmetic operations to visual embeddings and then generating text based on that embedding. In other words, the benchmark was constructed to do equations in the form *image + (image - image) ~ text*.
+Although Tewel et al. (2022) show that their model is able to use text strings instead of visual input (by replacing images in the equations with strings), the benchmark, as proposed in the ZeroCap paper, is formulated as applying arithmetic operations to visual embeddings and then generating text based on that embedding. In other words, the benchmark was constructed to do equations in the form *image + (image - image) ~ text*.
 
 While FROMAGe models are capable of outputting images (by retrieving them from a database), the architecture of ZeroCap models prevents them from outputting anything else than text. Based on this additional capability of FROMAGe models, we extend the benchmark and do not only generate text from the embeddings, but also retrieve images and evaluate how well they match the expected result. In other words, we also experiment with equations in the form *image + (image - image) ~ image*. 
 
@@ -94,7 +94,7 @@ In each case, all images in the benchmark are processed using the visual encoder
 
 The simplest approach is that inspired by Word2Vec, where the analogy resolution (i.e. image arithmetic) is explicitly performed on the image embeddings prior to prompting: 
 
-    result = model.visual_embs['leaders/obama'] - model.visual_embs['flags/usa'] + model.visual-embs['flags/germany']
+    result = model.visual_embs['leaders/obama'] - model.visual_embs['flags/usa'] + model.visual_embs['flags/germany']
     prompt = [result]
 
 To directly compare this method to ZeroCap, only textual output is generated. In this approach, the captioning pipeline is employed.  Though the main objective during image captioning was not to generate the [RET] token, the model is capable of doing so. For this reason we set the RET scaling factor to 0, ensuring [RET] is not generated and no retrieval is performed. The precalulated embedding is fed to the LLM as the visual prefix, with no other tokens. The model then generates text representations of up to five tokens based on the prefix.
@@ -105,7 +105,7 @@ To directly compare this method to ZeroCap, only textual output is generated. In
 
 The next approach is very similar to the previous one, except we retrieve images instead of text. For this reason, the image-text retrieval pipeline is employed. We construct the prompt in the same manner, but now append it with the [RET] token:
 
-    result = model.visual_embs['leaders/obama'] - model.visual_embs['flags/usa'] + model.visual-embs['flags/germany']
+    result = model.visual_embs['leaders/obama'] - model.visual_embs['flags/usa'] + model.visual_embs['flags/germany']
     prompt = [result, '[RET]']
     
 Next, the input sequence is passed through the language model, which generates output representations. To map these representations to the visual space for retrieval, the representation of the [RET] token from the last hidden layer of the language model is fed through the $W_t$ layer.
@@ -279,7 +279,7 @@ In another example, where the analogy should yield Tokyo, the model correctly fi
 > flags/japan + (cities/berlin - flags/germany)
 ![](./img/JBG-tokyo.png)
 
-Another example worthwhile to mention closely misses the expected result, an image of Canberra. Instead, two images feature the Uluru rock (located in central Australia), and the third image features the Sydney Opera House. Given that Tewel et al. report the same confusion with their model, we can assume that the benchmark's "capital direction" actually is interpreted as a "most characteristic city direction".
+Another example worthwhile to mention closely misses the expected result, an image of Canberra. Instead, two images feature the Uluru rock (located in central Australia), and the third image features the Sydney Opera House. Given that Tewel et al. (2022) report the same confusion with their model, we can assume that the benchmark's "capital direction" actually is interpreted as a "most characteristic city direction".
 
 > flags/australia + (cities/cairo - flags/egypt)
 ![](./img/ACE-canberra.png)
@@ -427,7 +427,7 @@ As is apparent in the T-SNE plot, there are two overlapping clusters (*countries
 
 ### Many-to-one relationship
 
-The relation templates appearing in the benchmark were, according to Tewel et al., specifically chosen because of their many-to-one character. However, the relation between countries and leaders is handled ambiguously in the ZeroCap paper: the scores reported in the paper are for *leaders &rarr; country*, while the examples illustrate *country &rarr; leaders*. Furthermore, the template *country &rarr; capital* is not many-to-one: from the few countries deviating from a one-to-one mapping, a few have multiple constitutional and/or *de-facto* capitals (i.e., one-to-many, e.g., Montenegro, South Africa, and Bolivia), and one - Nauru - does not have a constitutional capital (i.e., one-to-zero). No city satisfies the many-to-one criterium by being the capital of multiple countries.
+The relation templates appearing in the benchmark were, according to Tewel et al. (2022), specifically chosen because of their many-to-one character. However, the relation between countries and leaders is handled ambiguously in the ZeroCap paper: the scores reported in the paper are for *leaders &rarr; country*, while the examples illustrate *country &rarr; leaders*. Furthermore, the template *country &rarr; capital* is not many-to-one: from the few countries deviating from a one-to-one mapping, a few have multiple constitutional and/or *de-facto* capitals (i.e., one-to-many, e.g., Montenegro, South Africa, and Bolivia), and one - Nauru - does not have a constitutional capital (i.e., one-to-zero). No city satisfies the many-to-one criterium by being the capital of multiple countries.
 
 ### Difficult to apply
 In addition to these conceptual issues, the benchmark lacks a proper definition. The authors provide images of the entities and a short list of example relations. However, for the results to be comparable, the benchmark would at least need a closed list of relations to be tested, and optimally also specifications on how to apply the metrics.
@@ -435,7 +435,7 @@ In addition to these conceptual issues, the benchmark lacks a proper definition.
 ## Limitations of Our Work
 
 ### Comparison to ZeroCap
-As a consequence of the vague definition of the benchmark, our numeric results are hardly comparable to the scores of ZeroCap and ClipCap reported by Tewel et al. We cannot exclude differences due to possibly different relations or to the application of the metrics. Furthermore, the following aggregations of different templates into the same column have to be taken into account:
+As a consequence of the vague definition of the benchmark, our numeric results are hardly comparable to the scores of ZeroCap and ClipCap reported by Tewel et al. (2022). We cannot exclude differences due to possibly different relations or to the application of the metrics. Furthermore, the following aggregations of different templates into the same column have to be taken into account:
 * While the last column is *leaders &rarr; country*, we tested relations of the form *country &rarr; leaders*, as apparent in the ZeroCap examples. However, *leaders &rarr; country* might be considered the more logical direction, as it better fulfils the many-to-one requirement.
 * All templates featuring *country* are reported as such in the ZeroCap paper. However, as the benchmark's country category does not contain each country mentioned in the example relationships, we had to fall back to using images from the "flag" category. Therefore, results aggregated in a "country" column also feature, at least in the FROMAGe row, relations containing "flag" images.
 
