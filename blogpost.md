@@ -30,7 +30,7 @@ For image captioning, the model learns a linear mapping $\mathbf{W}_c$ to transf
 
 FROMAGe retrieves images using an autoregressive language model. However, this model's causal attention over text is less expressive than bidirectional attention. To address this, a special [RET] token is added to the language model's vocabulary. During training, the [RET] token is appended to input captions, enabling an additional step of attention and creating a stronger text representation. The [RET] token also facilitates image retrieval. To map the language model's output to the visual space, the hidden representation of the [RET] token is passed through a linear mapping $\mathbf{W}_t$. The intuition behind this is to obtain the hidden representations that lead to the outputting of the [RET] token, as these will be most informative for retrieval. Similarly, a linear mapping $W_i$ is trained to map visual embeddings to the same retrieval space.
 
-### Training Setup 
+### Training Setup
 
 As mentioned previously, FROMAGe employs a multi-task objective for training, which includes image captioning and image-text retrieval.  An overview of both training pipelines is depicted here:
 
@@ -41,7 +41,7 @@ The image captioning task involves generating text tokens conditioned on a visua
 
 To encourage the model to attend more explicitly to images, distinct examples are randomly concatenated together with a probability of 0.5.
 
-#### Image-text Retrieval
+#### Image-Text Retrieval
 The image-text retrieval task focuses on retrieving images conditioned on text and vice versa. Given a caption $x$ and its paired image $y$, the output of the last hidden layer of the LLM for the [RET] token and the output of the visual encoder for the image are extracted. The normalized cosine similarity for the image and text embeddings can then be computed after mapping each embedding with the corresponding mappings $W_t$, and $W_i$.
 
 The InfoNCE loss is minimized for both text-to-image and image-to-text retrieval over a batch of text-image pairs with contrastive learning. Each true image-caption pair is treated as a positive example, and other in-batch pairs are treated as negatives.
@@ -308,7 +308,7 @@ In conclusion, FROMAGe is, in some cases, capable  of resolving the analogies an
 
 For more information, including prompt and outputs, we refer the reader to this [notebook](./demos/Visual-Arithmetics/Image-to-Image/arithmetic_ITRet.ipynb).
 
-### Image-to-Image: Multimodal Prompting (ZeroVisMulti)
+### Image-to-Image: Multimodal prompting (ZeroVisMulti)
 
 In the third experiment, the FROMAGe model is directly prompted using the analogy. For each of the following examples, we present the given prompt, the text that the model generates in response, and the top three images that are retrieved.
 
@@ -384,17 +384,17 @@ Grounding LLMs to additional domains can be an effective approach. However, ther
 ### Training on Conceptual Captions
 While both CLIP and OPT are trained on high-quality datasets, the FROMAGe-specific components (i.e., the linear layers and the embedding of the [RET] token) are trained on CC3M (Sharma et al., 2018). The same dataset is also used to retrieve images from. As Conceptual Captions datasets are harvested from the web (by leveraging the alt-text attribute of HTML), they offer a significantly higher variety than carefully curated datasets. However, many entities are replaced by hypernyms (e.g., "actor" instead of a specific name). We suspect that this "information loss" has a negative effect on FROMAGe's ability to pass on information from the visual to the textual components (which can be seen in the following [notebook](https://github.com/nils2/DL2-ZeroVis/tree/main/demos/Extra-Studies/Availability/txt-to-img) and [folder](https://github.com/nils2/DL2-ZeroVis/tree/main/demos/Extra-Studies/Availability/img-to-img)).
 
-### LLM not trained for instructions
+### LLM not Trained for Instructions
 The OPT-6.7B model was not instruction-tuned. Providing it with additional examples in a few-shot setting did not improve performance (as is shown in this [notebook](./demos/Extra-Studies/few-shot-cot_ICap_greedy.ipynb)).
 
-### Susceptibility to textual input
+### Susceptibility to Textual Input
 During our experiments (available in this [folder](https://github.com/nils2/DL2-ZeroVis/tree/main/demos/Extra-Studies/Availability/txt-to-img)), we sometimes observed an additional limitation of the FROMAGe model: There were significant disparities in the quality of the model's output that could be triggered by minor variations in the input text. Remarkably, even slight differences in word capitalizations could compromise the output. We illustrate this phenomenon using two examples:
 * When prompting the model for an image of "apple the company", the model retrieves images of the fruit apple. However, capitalizing "Apple" in the same prompt leads to the retrieval of Apple's logo.
 * Nonetheless, it is worth noting that standardized capitalization does not guarantee favorable results: Prompting the model with "Image of australia the flag" leads to a better precision@3 than using the correctly capitalized form "Australia".
 
 These subtle disparities in the textual input are beyond the user's control but can significantly influence the model's performance.
 
-### Image URL availability
+### Image URL Availability
 One notable technical limitation arises from the specific way FROMAGe accesses the CC3M dataset, which is stored in a decentralized manner and lacks long-term availability guarantees. Consequently, some of the images linked to through the provided URLs are no longer accessible. To address this issue, we employ a fallback approach that retrieves the next-best output while indicating the position of the image candidate (note the *k=N* box in the upper-left corner of each image). Because this limitation can make it difficult to draw comprehensive conclusions about the model's capabilities, especially when k is high, we report results with low k values.
 
 ## Conclusions
@@ -413,7 +413,7 @@ Despite initial expectations, the method of direct prompting in the ZeroVisMulti
 
 ## Limitations of the Benchmark
 
-### Entity categories
+### Entity Categories
 
 In addition to its small size, the Visual Relations benchmark possesses a notable shortcoming in terms of category definition. To illustrate this, we employ t-Distributed Stochastic Neighbor Embedding (T-SNE) (Van der Maaten et al., 2008). T-SNE is a non-linear dimensionality reduction algorithm known for its ability to preserve local structure within high-dimensional datasets. It calculates the similarity of data points in a high-dimensional space and maps them into a lower-dimensional (in our case, two-dimensional) space by leveraging gradient descent to minimize the Kullback-Leibler divergence between the different dimensionalities. We apply T-SNE to the embeddings after encoding the benchmark's images with the ViT.
 
@@ -421,11 +421,11 @@ In addition to its small size, the Visual Relations benchmark possesses a notabl
 
 As is apparent in the T-SNE plot, there are two overlapping clusters (*countries* with *flags* and *cities* with *buildings*). We attribute these overlaps to the fact that the images representing countries feature the country's flag and the images representing cities feature characteristic buildings located in the city in question. A contrastive example of closely related but non-overlapping clusters is the one of leaders and CEOs. The minimal distinctions between the overlapping categories, especially in the striking case of *countries* and *flags*, might not be picked up by vision-language models, wherefore we question the rationale behind the separate handling of these categories.
 
-### Many-to-One relationship
+### Many-to-One Relationship
 
 The relation templates appearing in the benchmark were, according to Tewel et al. (2022), specifically chosen because of their many-to-one character. However, the relation between countries and leaders is handled ambiguously in the ZeroCap paper: the scores reported in the paper are for *leaders &rarr; country*, while the examples illustrate *country &rarr; leaders*. Furthermore, the template *country &rarr; capital* is not many-to-one: from the few countries deviating from a one-to-one mapping, a few have multiple constitutional and/or *de-facto* capitals (i.e., one-to-many, e.g., Montenegro, South Africa, and Bolivia), and one - Nauru - does not have a constitutional capital (i.e., one-to-zero). No city satisfies the many-to-one criterium by being the capital of multiple countries.
 
-### Difficult to apply
+### Difficult to Apply
 In addition to these conceptual issues, the benchmark lacks a proper definition. The authors provide images of the entities and a short list of example relations. However, for the results to be comparable, the benchmark would at least need a closed list of relations to be tested, and optimally also specifications on how to apply the metrics.
 
 ## Limitations of Our Work
@@ -435,7 +435,7 @@ As a consequence of the vague definition of the benchmark, our numeric results a
 * While the last column is *leaders &rarr; country*, we tested relations of the form *country &rarr; leaders*, as apparent in the ZeroCap examples. However, *leaders &rarr; country* might be considered the more logical direction, as it better fulfils the many-to-one requirement.
 * All templates featuring *country* are reported as such in the ZeroCap paper. However, as the benchmark's country category does not contain each country mentioned in the example relationships, we had to fall back to using images from the "flag" category. Therefore, results aggregated in a "country" column also feature, at least in the FROMAGe row, relations containing "flag" images.
 
-### Qualitative analysis of image output
+### Qualitative Analysis of Image Output
 While our qualitative analysis provides a comprehensive insight into the model's capabilities, our experiments with visual output are hardly comparable to other models or settings, as our study lacks quantitative analysis.
 
 
@@ -486,7 +486,7 @@ Sharma, P., Ding, N., Goodman, S., & Soricut, R. (2018, July). Conceptual captio
 
 ## Appendix
 
-### A: Additional findings
+### A: Additional Findings
 
 While evaluating the outputs qualitatively, we observed some consistent associations, whose foundation we can only assume. For instance, when [flags/england] is incorporated into the prompt, the Brunei flag appears in the retrieved images on multiple occasions. However, there is no visual correlation between the flags, and the historical connection—Brunei being a British protectorate from 1888 to 1983—appears to be tenuous.
 
@@ -503,6 +503,6 @@ Contrasting to these very clear examples, in some cases, the model retrieves mor
 > generated output:  *ive been saying [RET]*\
 ![](./img/EBU-obama.png)
 
-### B: Extra studies
+### B: Extra Studies
 
 One of the extra studies performed was a multi-modal variations of the same prompts, which can be found in this [notebook](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Extra-Studies/multimodal_ICap_greedy.ipynb). In this notebook a few modulations of two prompts are prompted. Each modulation was additionally attempted with the hyperparameter called *min_word_tokens*, with which a minimum word token amount will be generated before a [RET] token could be generated. The addition of this hyperparameter seems to mitigate the issue of the model returning an answer with a [RET] token before it was actually done generating the full answer sentence. The notebook shows that the aforementioned problems with the model and task, hold for the different modulations of the prompt.
