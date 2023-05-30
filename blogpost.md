@@ -14,9 +14,9 @@ FROMAGe (Koh et al., 2023) employs a pretrained language model and a pretrained 
 
 ### The Main Building Blocks
 
-FROMAGe operates based on the publicly available OPT-6.7B (Zhang et al., 2022) language model that was initially trained on text-only data using a maximum likelihood objective. Following this initial training, the parameters remain frozen.  Given an input text (e.g. an image caption), a sequence of tokens are extracted with a byte-level BPE tokenizer.
+FROMAGe operates based on the publicly available OPT-6.7B (Zhang et al., 2022) language model that was initially trained on text-only data using a maximum likelihood objective. Following this initial training, the parameters remain frozen.  Given an input text (e.g. an image caption), a sequence of tokens are extracted with a byte-level BPE tokenizer (Sennrich, Haddow & Birch, 2015).
 
-To extract visual information from an input image corresponding to a caption, FROMAGe’s visual component consists of the pretrained CLIP ViT-L/14 model (Radford et al., 2021). The CLIP weights are kept frozen as well . 
+To extract visual information from an input image corresponding to a caption, FROMAGe’s visual component consists of the pretrained CLIP ViT-L/14 model (Radford et al., 2021). The CLIP weights are kept frozen as well. 
 
 ### Integration of Language and Visual Components
 
@@ -56,14 +56,12 @@ Visual arithmetic tasks provide an interesting paradigm for exploring the ground
 
 To evaluate FROMAGe's visual grounding, we leverage the Visual Relations benchmark proposed by Tewel et al. (2022). They propose the ZeroCap method, which combines CLIP (Radford et al., 2021) and GPT-2 (Radford et al., 2019) without additional finetuning. Their experimental model has the potential of providing zero-shot captioning, bringing together a realistic textual variability, recognition abilities independent from object categories, and real-world knowledge embedded in the two models.
 
-
 ### Visual Arithmetics
-To demonstrate the multimodal reasoning of their model, Tewel et al. (2022) study its capabilities in visual-semantic arithmetics. Their proposed task is inspired by the famous examples introduced by Mikolov et al. In their word2vec paper, they show that simple algebraic operations performed on word embeddings can reveal semantic relations between the words they encode.
+To demonstrate the multimodal reasoning of their model, Tewel et al. (2022) study its capabilities in visual-semantic arithmetics. Their proposed task is inspired by the famous examples introduced by Mikolov et al. (2013). In their word2vec paper, they show that simple algebraic operations performed on word embeddings can reveal semantic relations between the words they encode.
 > vector("King") - vector("Man") + vector("Woman") ~ vector("Queen")
 
 Tewel et al. (2022) extend this idea to the visual domain and show that their model is able to solve a similar task with images:
 ![](./img/young_queen_zerocap.png)
-
 
 As a closely related task, they propose to generate real-world knowledge using the relations between images. As an example, they formulate the question *"Who is the president of Germany?"* as an arithmetical expression. They create a "presidential direction" by subtracting the embedding of an image of Obama from the embedding of an image of the USA's flag, and then add the embedding of an image of Germany's flag. They then use the resulting embedding vector as an input for the language model, which generates "Angela Merkel":
 
@@ -81,9 +79,9 @@ To allow the visual reasoning abilities of multimodal models to be tested, Tewel
 These templates are specifically chosen for their many-to-one association, exemplified by the fact that a country can host a myriad of buildings, yet each building typically pertains to a single country.
 
 ### Extending Benchmark Possibilities: FROMAGe's Capability for Image Retrieval
-Although Tewel et al. (2022) show that their model is able to use text strings instead of visual input (by replacing images in the equations with strings), the benchmark, as proposed in the ZeroCap paper, is formulated as applying arithmetic operations to visual embeddings and then generating text based on that embedding. In other words, the benchmark was constructed to do equations in the form *image + (image - image) ~ text*.
+Although Tewel et al. (2022) show that their model is able to use text strings instead of visual input (by replacing images in the equations with strings), their benchmark is formulated as applying arithmetic operations to visual embeddings and then generating text based on that embedding. In other words, the benchmark was constructed to do equations in the form *image + (image - image) ~ text*.
 
-While FROMAGe models are capable of outputting images (by retrieving them from a database), the architecture of ZeroCap models prevents them from outputting anything else than text. Based on this additional capability of FROMAGe models, we extend the benchmark and do not only generate text from the embeddings, but also retrieve images and evaluate how well they match the expected result. In other words, we also experiment with equations in the form *image + (image - image) ~ image*. 
+While FROMAGe models are capable of outputting images (by retrieving them from a database), the architecture of the ZeroCap model prevents it from outputting anything else than text. Based on this additional capability of FROMAGe models, we extend the benchmark and do not only generate text from the embeddings, but also retrieve images and evaluate how well they match the expected result. In other words, we also experiment with equations in the form *image + (image - image) ~ image*. 
 
 ## Mapping, Generation, and Retrieval
 
@@ -137,6 +135,10 @@ We report results for the three methods mentioned in the last section.
 The first approach, as it is word2vec-inspired and produces textual output, can be assessed quantitatively using the visual relations benchmark. To allow direct comparison, we add our results to the table mentioned in the ZeroCap paper. For consistency reasons, we report the same metrics:
 
 <table>
+    <caption style="caption-side: bottom">
+        Comparison of FROMAGe with ZeroCap and ClipCap on the Visual Relations benchmark.
+        <br>B@1 = BLEU-1, R@5 = Recall@5, C-s = CLIPScore
+    </caption>
     <tr>
         <th colspan=1 style="text-align:center">Method</th>
         <th colspan=3 style="text-align:center">Building &rarr; Country</th>
@@ -211,13 +213,9 @@ The first approach, as it is word2vec-inspired and produces textual output, can 
         <td>0.0</td><td>0.0</td><td>0.168</td>
         <td>0.0</td><td>0.0</td><td>0.148</td>
     </tr>-->
-    <caption style="caption-side: bottom">
-        Comparison of FROMAGe with ZeroCap and ClipCap on the Visual Relations benchmark.
-        <br>B@1 = BLEU-1, R@5 = Recall@5, C-s = CLIPScore
-    </caption>
 </table>
 
-Quantitatively, FROMAGe consistently underperforms both the ZeroCap baseline and ClipCap (a model which combines CLIP and GPT-2 based on an approach similar to FROMAGe's). 
+Quantitatively, FROMAGe consistently underperforms both the ZeroCap baseline and ClipCap (a model which combines CLIP and GPT-2 based on an approach similar to FROMAGe's), introduced by Mokady et al. (2021). 
 
 In a qualitative evaluation, we found that the model often generates token sequences which are rarely unrelated to the specific entity, but instead roughly approach the category we're looking for:
 * country: *"a map of the country"* or *"flag with the flag and"*
@@ -292,19 +290,19 @@ One might have observed in the previous examples that the retrieved images for e
 * While the model accurately retrieves an image of Havana, the remaining two images, although not representing Havana, are characterized by a similar color scheme.
 * In a similar manner, the model successfully retrieves an image of Moscow, while the other two images, despite not being of Moscow, depict buildings with similar architectural features. 
 
-> building/china_wall + (countries/egypt - building/pyramid)
+> building/china_wall + (countries/egypt - building/pyramid)\
 ![](./img/CEP-china.png)
 
-> flags/usa + (cities/bangkok - flags/thailand)
+> flags/usa + (cities/bangkok - flags/thailand)\
 ![](./img/UBT-washington.png)
 
-> flags/england + (cities/cairo - flags/egypt)
+> flags/england + (cities/cairo - flags/egypt)\
 ![](./img/ECE-london.png)
 
-> flags/cuba + (cities/bangkok - flags/thailand)
+> flags/cuba + (cities/bangkok - flags/thailand)\
 ![](./img/CBT-havana.png)
 
-> flags/russia + (cities/bangkok - flags/thailand)
+> flags/russia + (cities/bangkok - flags/thailand)\
 ![](./img/RBT-moscow.png)
 
 In conclusion, FROMAGe is, in some cases, capable  of resolving the analogies and retrieving at least some images of the corresponding solution.  In the majority of the cases, however, the retrieved images do not coincide with the expected output. It is worthwhile to mention that the three retrieved images typically exhibit visual similarity.
@@ -378,7 +376,6 @@ Similarly, in this case, the model generates the phrase "ive been a great presid
 
 In conclusion, despite initial expectations, the method of direct prompting often yields less satisfactory outcomes in terms of resolving analogies. Instead, the model picks up on cues encountered in the prompt, generates a probable text sequence, and retrieves images based on both the prompt and the generated prefix.
 
-
 For more information, including prompt and outputs, we refer the reader to this [notebook](./demos/Visual-Arithmetic/Image-to-Image/zero-shot_ICap_greedy.ipynb).
 
 ## Limitations of FROMAGe
@@ -386,13 +383,13 @@ For more information, including prompt and outputs, we refer the reader to this 
 Grounding LLMs to additional domains can be an effective approach. However, there are a few limitations in the specific way FROMAGe is trained which inhibitis it from achieving a performance comparable to ZeroCap.
 
 ### Training on Conceptual Captions
-While both CLIP and OPT are trained on high-quality datasets, the FROMAGe-specific components (i.e., the linear layers and the embedding of the [RET] token) are trained on CC3M. The same dataset is also used to retrieve images from. As Conceptual Captions datasets are harvested from the web (by leveraging the alt-text attribute of HTML), they offer a significantly higher variety than carefully curated datasets. However, many entities are replaced by hypernyms (e.g., "actor" instead of a specific name). We suspect that this "information loss" has a negative effect on FROMAGe's ability to pass on information from the visual to the textual components.
+While both CLIP and OPT are trained on high-quality datasets, the FROMAGe-specific components (i.e., the linear layers and the embedding of the [RET] token) are trained on CC3M (Sharma et al., 2018). The same dataset is also used to retrieve images from. As Conceptual Captions datasets are harvested from the web (by leveraging the alt-text attribute of HTML), they offer a significantly higher variety than carefully curated datasets. However, many entities are replaced by hypernyms (e.g., "actor" instead of a specific name). We suspect that this "information loss" has a negative effect on FROMAGe's ability to pass on information from the visual to the textual components (which can be seen in the following [notebook](https://github.com/nils2/DL2-ZeroVis/tree/main/demos/Extra-Studies/Availability/txt-to-img) and [folder](https://github.com/nils2/DL2-ZeroVis/tree/main/demos/Extra-Studies/Availability/img-to-img)).
 
 ### LLM not trained for instructions
-The OPT-6.7B model was not instruction-tuned. Providing it with additional examples in a few-shot setting did not improve performance (the notebook can be found [here](./demos/Extra-Studies/few-shot-cot_ICap_greedy.ipynb)).
+The OPT-6.7B model was not instruction-tuned. Providing it with additional examples in a few-shot setting did not improve performance (as is shown in this [notebook](./demos/Extra-Studies/few-shot-cot_ICap_greedy.ipynb)).
 
 ### Susceptibility to textual input
-During our experiments, we sometimes observed an additional limitation of the FROMAGe model: There were significant disparities in the quality of the model's output that could be triggered by minor variations in the input text. Remarkably, even slight differences in word capitalizations could compromise the output. We illustrate this phenomenon using two examples:
+During our experiments (available in this [folder](https://github.com/nils2/DL2-ZeroVis/tree/main/demos/Extra-Studies/Availability/txt-to-img)), we sometimes observed an additional limitation of the FROMAGe model: There were significant disparities in the quality of the model's output that could be triggered by minor variations in the input text. Remarkably, even slight differences in word capitalizations could compromise the output. We illustrate this phenomenon using two examples:
 * When prompting the model for an image of "apple the company", the model retrieves images of the fruit apple. However, capitalizing "Apple" in the same prompt leads to the retrieval of Apple's logo.
 * Nonetheless, it is worth noting that standardized capitalization does not guarantee favorable results: Prompting the model with "Image of australia the flag" leads to a better precision@3 than using the correctly capitalized form "Australia".
 
@@ -470,6 +467,8 @@ Koh, J. Y., Salakhutdinov, R., & Fried, D. (2023). Grounding language models to 
 
 Zhang, S., Roller, S., Goyal, N., Artetxe, M., Chen, M., Chen, S., ... & Zettlemoyer, L. (2022). Opt: Open pre-trained transformer language models. arXiv preprint arXiv:2205.01068.
 
+Sennrich, R., Haddow, B., & Birch, A. (2015). Neural machine translation of rare words with subword units. arXiv preprint arXiv:1508.07909.
+
 Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., ... & Sutskever, I. (2021, July). Learning transferable visual models from natural language supervision. In International conference on machine learning (pp. 8748-8763). PMLR.
 
 Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., & Sutskever, I. (2019). Language models are unsupervised multitask learners. OpenAI blog, 1(8), 9.
@@ -477,6 +476,10 @@ Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., & Sutskever, I. (2019). La
 Tewel, Y., Shalev, Y., Schwartz, I., & Wolf, L. (2022). Zerocap: Zero-shot image-to-text generation for visual-semantic arithmetic. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 17918-17928).
 
 Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013). Efficient estimation of word representations in vector space. arXiv preprint arXiv:1301.3781.
+
+Mokady, R., Hertz, A., & Bermano, A. H. (2021). Clipcap: Clip prefix for image captioning. arXiv preprint arXiv:2111.09734.
+
+Sharma, P., Ding, N., Goodman, S., & Soricut, R. (2018, July). Conceptual captions: A cleaned, hypernymed, image alt-text dataset for automatic image captioning. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) (pp. 2556-2565).
 
 ## Appendix
 
