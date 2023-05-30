@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Recent advancements in Artificial Intelligence owe much of their success to the rapidly evolving field of Language Modelling (Mokady et al., 2022; Li et al., 2023; Zeng et al., 2022). Large Language Models (LLM) are trained on extensive text corpora and showcase impressive capabilities, such as generating human-like dialogue, answering complex questions, and learning new tasks from minimal examples. However, can a model solely focused on language truly be considered "intelligent"?
+Recent advancements in Artificial Intelligence owe much of their success to the rapidly evolving field of Language Modelling (Mokady et al., 2021; Zeng et al., 2022; Li et al., 2023). Large Language Models (LLM) are trained on extensive text corpora and showcase impressive capabilities, such as generating human-like dialogue, answering complex questions, and learning new tasks from minimal examples. However, can a model solely focused on language truly be considered "intelligent"?
 
 One way to adapt a model to another domain is through grounding. In the case of vision and language, grounding can be achieved by aligning the embedding spaces of both modalities.
 
@@ -464,9 +464,9 @@ We indicate two additional promising avenues for extending our research. Firstly
 
 Mokady, R., Hertz, A., & Bermano, A. H. (2021). Clipcap: Clip prefix for image captioning. arXiv preprint arXiv:2111.09734.
 
-Li, J., Li, D., Savarese, S., & Hoi, S. (2023). Blip-2: Bootstrapping language-image pre-training with frozen image encoders and large language models. arXiv preprint arXiv:2301.12597.
-
 Zeng, A., Wong, A., Welker, S., Choromanski, K., Tombari, F., Purohit, A., ... & Florence, P. (2022). Socratic models: Composing zero-shot multimodal reasoning with language. arXiv preprint arXiv:2204.00598.
+
+Li, J., Li, D., Savarese, S., & Hoi, S. (2023). Blip-2: Bootstrapping language-image pre-training with frozen image encoders and large language models. arXiv preprint arXiv:2301.12597.
 
 Koh, J. Y., Salakhutdinov, R., & Fried, D. (2023). Grounding language models to images for multimodal generation. arXiv preprint arXiv:2301.13823.
 
