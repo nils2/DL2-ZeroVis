@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Recent advancements in Artificial Intelligence owe much of their success to the rapidly evolving field of Language Modelling. Large Language Models (LLM) are trained on extensive text corpora and showcase impressive capabilities, such as generating human-like dialogue, answering complex questions, and learning new tasks from minimal examples. However, can a model solely focused on language truly be considered "intelligent"?
+Recent advancements in Artificial Intelligence owe much of their success to the rapidly evolving field of Language Modelling (Mokady et al., 2022; Li et al., 2023; Zeng et al., 2022). Large Language Models (LLM) are trained on extensive text corpora and showcase impressive capabilities, such as generating human-like dialogue, answering complex questions, and learning new tasks from minimal examples. However, can a model solely focused on language truly be considered "intelligent"?
 
 One way to adapt a model to another domain is through grounding. In the case of vision and language, grounding can be achieved by aligning the embedding spaces of both modalities.
 
@@ -135,10 +135,6 @@ We report results for the three methods mentioned in the last section.
 The first approach, as it is word2vec-inspired and produces textual output, can be assessed quantitatively using the visual relations benchmark. To allow direct comparison, we add our results to the table mentioned in the ZeroCap paper. For consistency reasons, we report the same metrics:
 
 <table>
-    <caption style="caption-side: bottom">
-        Comparison of FROMAGe with ZeroCap and ClipCap on the Visual Relations benchmark.
-        <br>B@1 = BLEU-1, R@5 = Recall@5, C-s = CLIPScore
-    </caption>
     <tr>
         <th colspan=1 style="text-align:center">Method</th>
         <th colspan=3 style="text-align:center">Building &rarr; Country</th>
@@ -214,6 +210,9 @@ The first approach, as it is word2vec-inspired and produces textual output, can 
         <td>0.0</td><td>0.0</td><td>0.148</td>
     </tr>-->
 </table>
+
+*Comparison of FROMAGe with ZeroCap and ClipCap on the Visual Relations benchmark.
+B@1 = BLEU-1, R@5 = Recall@5, C-s = CLIPScore*
 
 Quantitatively, FROMAGe consistently underperforms both the ZeroCap baseline and ClipCap (a model which combines CLIP and GPT-2 based on an approach similar to FROMAGe's), introduced by Mokady et al. (2021). 
 
@@ -463,6 +462,12 @@ We indicate two additional promising avenues for extending our research. Firstly
 
 ## References
 
+Mokady, R., Hertz, A., & Bermano, A. H. (2021). Clipcap: Clip prefix for image captioning. arXiv preprint arXiv:2111.09734.
+
+Li, J., Li, D., Savarese, S., & Hoi, S. (2023). Blip-2: Bootstrapping language-image pre-training with frozen image encoders and large language models. arXiv preprint arXiv:2301.12597.
+
+Zeng, A., Wong, A., Welker, S., Choromanski, K., Tombari, F., Purohit, A., ... & Florence, P. (2022). Socratic models: Composing zero-shot multimodal reasoning with language. arXiv preprint arXiv:2204.00598.
+
 Koh, J. Y., Salakhutdinov, R., & Fried, D. (2023). Grounding language models to images for multimodal generation. arXiv preprint arXiv:2301.13823.
 
 Zhang, S., Roller, S., Goyal, N., Artetxe, M., Chen, M., Chen, S., ... & Zettlemoyer, L. (2022). Opt: Open pre-trained transformer language models. arXiv preprint arXiv:2205.01068.
@@ -476,8 +481,6 @@ Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., & Sutskever, I. (2019). La
 Tewel, Y., Shalev, Y., Schwartz, I., & Wolf, L. (2022). Zerocap: Zero-shot image-to-text generation for visual-semantic arithmetic. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 17918-17928).
 
 Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013). Efficient estimation of word representations in vector space. arXiv preprint arXiv:1301.3781.
-
-Mokady, R., Hertz, A., & Bermano, A. H. (2021). Clipcap: Clip prefix for image captioning. arXiv preprint arXiv:2111.09734.
 
 Sharma, P., Ding, N., Goodman, S., & Soricut, R. (2018, July). Conceptual captions: A cleaned, hypernymed, image alt-text dataset for automatic image captioning. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) (pp. 2556-2565).
 
@@ -502,4 +505,4 @@ Contrasting to these very clear examples, in some cases, the model retrieves mor
 
 ### B: Extra studies
 
-One of the extra studies performed was a multi-modal variations of the same prompts, which can be found in this [notebook](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Extra-Studies/multimodal_ICap_greedy.ipynb). In this notebook 
+One of the extra studies performed was a multi-modal variations of the same prompts, which can be found in this [notebook](https://github.com/nils2/DL2-ZeroVis/blob/main/demos/Extra-Studies/multimodal_ICap_greedy.ipynb). In this notebook a few modulations of two prompts are prompted. Each modulation was additionally attempted with the hyperparameter called *min_word_tokens*, with which a minimum word token amount will be generated before a [RET] token could be generated. The addition of this hyperparameter seems to mitigate the issue of the model returning an answer with a [RET] token before it was actually done generating the full answer sentence. The notebook shows that the aforementioned problems with the model and task, hold for the different modulations of the prompt.
