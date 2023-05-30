@@ -212,7 +212,7 @@ The first approach, as it is word2vec-inspired and produces textual output, can 
 </table>
 
 *Comparison of FROMAGe with ZeroCap and ClipCap on the Visual Relations benchmark.
-B@1 = BLEU-1, R@5 = Recall@5, C-s = CLIPScore*
+B@1 = BLEU-1, R@5 = Recall@5, C-s = CLIPScore (ZeroCap defines this score differently then the well known metric)*
 
 Quantitatively, FROMAGe consistently underperforms both the ZeroCap baseline and ClipCap (a model which combines CLIP and GPT-2 based on an approach similar to FROMAGe's), introduced by Mokady et al. (2021). 
 
