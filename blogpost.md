@@ -41,7 +41,7 @@ The image captioning task involves generating text tokens conditioned on a visua
 
 To encourage the model to attend more explicitly to images, distinct examples are randomly concatenated together with a probability of 0.5.
 
-#### Image-text retrieval
+#### Image-text Retrieval
 The image-text retrieval task focuses on retrieving images conditioned on text and vice versa. Given a caption $x$ and its paired image $y$, the output of the last hidden layer of the LLM for the [RET] token and the output of the visual encoder for the image are extracted. The normalized cosine similarity for the image and text embeddings can then be computed after mapping each embedding with the corresponding mappings $W_t$, and $W_i$.
 
 The InfoNCE loss is minimized for both text-to-image and image-to-text retrieval over a batch of text-image pairs with contrastive learning. Each true image-caption pair is treated as a positive example, and other in-batch pairs are treated as negatives.
@@ -50,7 +50,7 @@ The final training loss is a weighted sum of the captioning loss and the two Inf
 
 Notably, only the linear mappings and the [RET] embedding vector are updated during training. The authors of FROMAGe explicitly refrain from fine-tuning either of the main models, because they argue that this would adapt the parameter configurations that make these models so powerful in their respective domains. They also reason this enables better generalization for in-context learning.
 
-## Visual Relations benchmark
+## Visual Relations Benchmark
 
 Visual arithmetic tasks provide an interesting paradigm for exploring the grounding capabilities of multimodal language models. These tasks involve the ability to comprehend, reason, and make decisions based on visual inputs - a challenge that requires a deep level of grounding in the visual world. 
 
@@ -421,7 +421,7 @@ In addition to its small size, the Visual Relations benchmark possesses a notabl
 
 As is apparent in the T-SNE plot, there are two overlapping clusters (*countries* with *flags* and *cities* with *buildings*). We attribute these overlaps to the fact that the images representing countries feature the country's flag and the images representing cities feature characteristic buildings located in the city in question. A contrastive example of closely related but non-overlapping clusters is the one of leaders and CEOs. The minimal distinctions between the overlapping categories, especially in the striking case of *countries* and *flags*, might not be picked up by vision-language models, wherefore we question the rationale behind the separate handling of these categories.
 
-### Many-to-one relationship
+### Many-to-One relationship
 
 The relation templates appearing in the benchmark were, according to Tewel et al. (2022), specifically chosen because of their many-to-one character. However, the relation between countries and leaders is handled ambiguously in the ZeroCap paper: the scores reported in the paper are for *leaders &rarr; country*, while the examples illustrate *country &rarr; leaders*. Furthermore, the template *country &rarr; capital* is not many-to-one: from the few countries deviating from a one-to-one mapping, a few have multiple constitutional and/or *de-facto* capitals (i.e., one-to-many, e.g., Montenegro, South Africa, and Bolivia), and one - Nauru - does not have a constitutional capital (i.e., one-to-zero). No city satisfies the many-to-one criterium by being the capital of multiple countries.
 
