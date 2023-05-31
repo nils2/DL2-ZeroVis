@@ -238,7 +238,7 @@ In rare cases, the model generates descriptions of the analogy's solution, e.g.,
     Expected result: cities/canberra
     Model generated outputs: australian city
 
-In this curious example, we found a *pars-pro-toto* releationship between the output and the expected solution - *"the city of the dead"* is the frequently used English designation of al-Qarafa, a vast necropolis located in Cairo.
+In this curious example, we found a *pars-pro-toto* relationship between the output and the expected solution - *"the city of the dead"* is the frequently used English designation of al-Qarafa, a vast necropolis located in Cairo.
 
     flags/egypt + (cities/moscow - flags/russia)
     Expected result: cities/cairo
