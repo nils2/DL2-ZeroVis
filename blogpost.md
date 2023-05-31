@@ -171,11 +171,11 @@ The first approach, as it is word2vec-inspired and produces textual output, can 
     </tr>
     <tr>
         <td>ZeroCap</td>
-        <td>0.1</td><td>0.32</td><td>0.7</td>
-        <td>0.14</td><td>0.32</td><td>0.68</td>
-        <td>0.1</td><td>0.3</td><td>0.64</td>
-        <td>0.03</td><td>0.33</td><td>0.66</td>
-        <td>0.1</td><td>0.28</td><td>0.68</td>
+        <td><b>0.1</b></td><td><b>0.32</b></td><td><b>0.7</b></td>
+        <td><b>0.14</b></td><td><b>0.32</b></td><td><b>0.68</b></td>
+        <td><b>0.1</b></td><td><b>0.3</b></td><td><b>0.64</b></td>
+        <td><b>0.03</b></td><td><b>0.33</b></td><td><b>0.66</b></td>
+        <td><b>0.1</b></td><td><b>0.28</b></td><td><b>0.68</b></td>
     </tr>
     <tr>
         <td>FROMAGe</td>
