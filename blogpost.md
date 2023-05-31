@@ -34,7 +34,7 @@ FROMAGe retrieves images using an autoregressive language model. However, this m
 
 As mentioned previously, FROMAGe employs a multi-task objective for training, which includes image captioning and image-text retrieval.  An overview of both training pipelines is depicted here:
 
-![](./img/fromage.png)
+![](https://github.com/nils2/DL2-ZeroVis/blob/1a3c7572b914b16df83bd972d602f33f3b3230d2/img/fromage.png)
 
 ####  Image Captioning Task
 The image captioning task involves generating text tokens conditioned on a visual prefix. The visual prefix is the output of the image-to-text mapping layer, which is prepended to the tokenized caption. The text is generated autoregressively, based on the previous tokens and the visual prefix. The captioning loss is then the negative log likelihood of all samples in a batch of image-text pairs.
@@ -97,7 +97,7 @@ The simplest approach is that inspired by Word2Vec, where the analogy resolution
 
 To directly compare this method to ZeroCap, only textual output is generated. In this approach, the captioning pipeline is employed.  Though the main objective during image captioning was not to generate the [RET] token, the model is capable of doing so. For this reason we set the RET scaling factor to 0, ensuring [RET] is not generated and no retrieval is performed. The precalulated embedding is fed to the LLM as the visual prefix, with no other tokens. The model then generates text representations of up to five tokens based on the prefix.
 
-![](./img/ZeroVisText.png)
+![](https://github.com/nils2/DL2-ZeroVis/blob/1a3c7572b914b16df83bd972d602f33f3b3230d2/img/ZeroVisText.png)
 
 ### Image-to-Image: Beyond textual output (ZeroVisImage)
 
@@ -110,7 +110,7 @@ Next, the input sequence is passed through the language model, which generates o
 
 Finally, the resulting embedding is compared to the precomputed embeddings of the CC3M images using normalized cosine similarity. Based on the computed similarity, the top three images are retrieved as the resolution to the visual analogy.
 
-![](./img/ZeroVisImage.png)
+![](https://github.com/nils2/DL2-ZeroVis/blob/1a3c7572b914b16df83bd972d602f33f3b3230d2/img/ZeroVisImage.png)
 
 ### Image-to-Image: Multimodal prompting (ZeroVisMulti)
 
@@ -124,7 +124,7 @@ The LLM then generates text representations based on the input, ending in a [RET
 
 In the same manner as previously described, the resulting embedding is compared to the precomputed embeddings and the three most similar images are retrieved.
 
-![](./img/ZeroVisMulti.png)
+![](https://github.com/nils2/DL2-ZeroVis/blob/1a3c7572b914b16df83bd972d602f33f3b3230d2/img/ZeroVisMulti.png)
 
 ## Results
 
