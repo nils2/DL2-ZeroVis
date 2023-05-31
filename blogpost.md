@@ -110,7 +110,7 @@ Next, the input sequence is passed through the language model, which generates o
 
 Finally, the resulting embedding is compared to the precomputed embeddings of the CC3M images using normalized cosine similarity. Based on the computed similarity, the top three images are retrieved as the resolution to the visual analogy.
 
-![](https://github.com/nils2/DL2-ZeroVis/blob/1a3c7572b914b16df83bd972d602f33f3b3230d2/img/ZeroVisImage.png)
+![](https://github.com/nils2/DL2-ZeroVis/blob/84c4630b44f48fdf4cb4d23f351aa9e19ef0ccf2/img/ZeroVisImage.png)
 
 ### Image-to-Image: Multimodal prompting (ZeroVisMulti)
 
@@ -124,7 +124,7 @@ The LLM then generates text representations based on the input, ending in a [RET
 
 In the same manner as previously described, the resulting embedding is compared to the precomputed embeddings and the three most similar images are retrieved.
 
-![](https://github.com/nils2/DL2-ZeroVis/blob/1a3c7572b914b16df83bd972d602f33f3b3230d2/img/ZeroVisMulti.png)
+![](https://github.com/nils2/DL2-ZeroVis/blob/84c4630b44f48fdf4cb4d23f351aa9e19ef0ccf2/img/ZeroVisMulti.png)
 
 ## Results
 
