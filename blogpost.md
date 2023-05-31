@@ -286,7 +286,7 @@ One might have observed in the previous examples that the retrieved images for e
 * An image depicting Vietnam along with two images portraying China when the analogy points to China. This is noteworthy given that both countries, apart from sharing a border, also feature yellow stars on a red background in their national flags.
 * Three images of the Taj Mahal when the analogy refers to Washington. The resemblance between the white dome of the Taj Mahal and the architectural elements and gardens of the White House could explain this choice.
 * An image each of the Tower of London (located in the city of London) and Windsor Castle (situated 35 km from London). Both images present a castle-like structure accompanied by a British flag, highlighting their visual congruity.
-* An image correctly depicting Havana. The remaining two images, although not representing Havana, are characterized by a similar color scheme.
+* Two images correctly depicting Havana. The remaining image, although not representing Havana, is characterised by a similar color scheme.
 * An image correctly depicting Moscow. The other two images, despite not being of Moscow, depict buildings with similar architectural features. 
 
 > building/china_wall + (countries/egypt - building/pyramid)\
