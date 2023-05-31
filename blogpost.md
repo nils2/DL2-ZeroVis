@@ -34,7 +34,7 @@ FROMAGe retrieves images using an autoregressive language model. However, this m
 
 As mentioned previously, FROMAGe employs a multi-task objective for training, which includes image captioning and image-text retrieval.  An overview of both training pipelines is depicted here:
 
-![](./img/fromage.png)
+![](./img/fromage-pipelines.png)
 
 ####  Image Captioning Task
 The image captioning task involves generating text tokens conditioned on a visual prefix. The visual prefix is the output of the image-to-text mapping layer, which is prepended to the tokenized caption. The text is generated autoregressively, based on the previous tokens and the visual prefix. The captioning loss is then the negative log likelihood of all samples in a batch of image-text pairs.
