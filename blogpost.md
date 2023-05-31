@@ -37,7 +37,7 @@ As mentioned previously, FROMAGe employs a multi-task objective for training, wh
 ![](https://github.com/nils2/DL2-ZeroVis/blob/1a3c7572b914b16df83bd972d602f33f3b3230d2/img/fromage.png)
 
 ####  Image Captioning Task
-The image captioning task involves generating text tokens conditioned on a visual prefix. The visual prefix is the output of the image-to-text mapping layer, which is prepended to the tokenized caption. The text is generated autoregressively, based on the previous tokens and the visual prefix. The captioning loss is then the negative log likelihood of all samples in a batch of image-text pairs.
+The image captioning task involves generating text tokens conditioned on a visual prefix. The visual prefix is the output of the image-to-text mapping layer, which is prepended to the tokenized caption. The text is generated autoregressively, based on the previous tokens and the visual prefix. The captioning loss is then the negative log-likelihood of all samples in a batch of image-text pairs.
 
 To encourage the model to attend more explicitly to images, distinct examples are randomly concatenated together with a probability of 0.5.
 
@@ -251,12 +251,12 @@ For more information, including prompt and outputs, we refer the reader to this 
 
 ### Image-to-Image: Beyond textual output (ZeroVisImage)
 
-In the second experiment, we let the model retrieve three images instead of generating text. For each of the following examples, we present the input arithmetic and the top 3 images the model retrieved.
+In the second experiment, we let the model retrieve three images instead of generating text. For each of the following examples, we present the input arithmetic and the top three images the model retrieved.
 
 We find that, from time to time, the model is capable of correctly resolving the analogy. We illustrate this with the following four examples, where the model correctly retrieves three images of:
 * London (featuring the Tower Bridge)
 * London (featuring the London Eye, the County Hall, and the Clock Tower with the Big Ben)
-* a British leader (Queen Elizabeth II)
+* A British leader (Queen Elizabeth II)
 * Paris (featuring the Eiffel Tower)
 
 > flags/england + (cities/paris - flags/france)
@@ -286,8 +286,8 @@ One might have observed in the previous examples that the retrieved images for e
 * An image depicting Vietnam along with two images portraying China when the analogy points to China. This is noteworthy given that both countries, apart from sharing a border, also feature yellow stars on a red background in their national flags.
 * Three images of the Taj Mahal when the analogy refers to Washington. The resemblance between the white dome of the Taj Mahal and the architectural elements and gardens of the White House could explain this choice.
 * An image each of the Tower of London (located in the city of London) and Windsor Castle (situated 35 km from London). Both images present a castle-like structure accompanied by a British flag, highlighting their visual congruity.
-* While the model accurately retrieves an image of Havana, the remaining two images, although not representing Havana, are characterized by a similar color scheme.
-* In a similar manner, the model successfully retrieves an image of Moscow, while the other two images, despite not being of Moscow, depict buildings with similar architectural features. 
+* An image correctly depicting Havana. The remaining two images, although not representing Havana, are characterized by a similar color scheme.
+* An image correctly depicting Moscow. The other two images, despite not being of Moscow, depict buildings with similar architectural features. 
 
 > building/china_wall + (countries/egypt - building/pyramid)\
 ![](./img/CEP-china.png)
