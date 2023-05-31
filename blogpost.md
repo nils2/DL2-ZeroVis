@@ -219,7 +219,7 @@ Quantitatively, FROMAGe consistently underperforms both the ZeroCap baseline and
 In a qualitative evaluation, we found that the model often generates token sequences which are rarely unrelated to the specific entity, and roughly approach the category we're looking for:
 * country: *"a map of the country"* or *"flag with the flag and"*
 * capital: *"a city skyline at dusk"* or *"a view of the city"*
-* company: *"the logo of the company"* or *"the comapny is worth more"*
+* company: *"the logo of the company"* or *"the company is worth more"*
 * leader: *"politician is a politician"* or *"politician, who is"*
 
 We illustrate this general finding with the following two examples, where the analogies should resolve to Microsoft and Beijing but the generated output approximates the concepts of company and city, respectively:
