@@ -318,7 +318,7 @@ In the subsequent examples, it's observed that while the model primarily leans o
 * When the analogy begins with '[flags/usa]', the model retrieves images of the American flag. The generated text contains *"great country"*, a phrase frequently used in American rhetoric, multiple times.
 * When '[flags/china]' is the first component of the analogy, the model retrieves images of the Chinese flag. The model generates text that can be interpreted to reference China's long history and the governance of the Chinese government.
 
-> [building/china_wall] is to [contries/china], as [building/capitol] is to\
+> [building/china_wall] is to [countries/china], as [building/capitol] is to\
 > generated output: *iaf map of the country with the flag in the background [RET]*\
 ![](./img/CCC-usa.png)
 
