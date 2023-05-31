@@ -42,7 +42,7 @@ The image captioning task involves generating text tokens conditioned on a visua
 To encourage the model to attend more explicitly to images, distinct examples are randomly concatenated together with a probability of 0.5.
 
 #### Image-Text Retrieval
-The image-text retrieval task focuses on retrieving images conditioned on text and vice versa. Given a caption $x$ and its paired image $y$, the output of the last hidden layer of the LLM for the [RET] token and the output of the visual encoder for the image are extracted. The normalized cosine similarity for the image and text embeddings can then be computed after mapping each embedding with the corresponding mappings $W_t$, and $W_i$.
+The image-text retrieval task focuses on retrieving images conditioned on text and vice versa. Given a caption $x$ and its paired image $y$, the output of the last hidden layer of the LLM for the [RET] token and the output of the visual encoder for the image are extracted. These are then mapped with their corresponding mappings $W_t$, and $W_i$.
 
 The InfoNCE loss is minimized for both text-to-image and image-to-text retrieval over a batch of text-image pairs with contrastive learning. Each true image-caption pair is treated as a positive example, and other in-batch pairs are treated as negatives.
 
@@ -216,7 +216,7 @@ B@1 = BLEU-1, R@5 = Recall@5, C-s = CLIPScore (ZeroCap defines this score differ
 
 Quantitatively, FROMAGe consistently underperforms both the ZeroCap baseline and ClipCap (a model which combines CLIP and GPT-2 based on an approach similar to FROMAGe's), introduced by Mokady et al. (2021). 
 
-In a qualitative evaluation, we found that the model often generates token sequences which are rarely unrelated to the specific entity, but instead roughly approach the category we're looking for:
+In a qualitative evaluation, we found that the model often generates token sequences which are rarely unrelated to the specific entity, and roughly approach the category we're looking for:
 * country: *"a map of the country"* or *"flag with the flag and"*
 * capital: *"a city skyline at dusk"* or *"a view of the city"*
 * company: *"the logo of the company"* or *"the comapny is worth more"*
@@ -405,7 +405,7 @@ With the ZeroVisImage approach, no textual input is provided to the LLM. Instead
 
 Despite initial expectations, the method of direct prompting in the ZeroVisMulti approach often yielded less satisfactory outcomes in terms of resolving analogies. As mentioned previously, the underlying LLM isn't specifically trained to follow instructions, hence it typically produces a probable continuation of the given prompt. Nevertheless, there is evidence suggesting that text generation could be advantageous, particularly with a model that's tuned to follow instructions. Generating text before initiating image retrieval provides the model with an opportunity to interpret the analogy, which means that image retrieval isn't solely based on visual similarity, as observed in the ZeroVisImage method. By doing so, the model can incorporate information that's semantically relevant from the language model, alongside visually relevant data from the visual encoder. This holistic approach has the potential to lead to more accurate resolution of analogies.
 
-## Summary
+## Novel Contributions
 
 * Building upon the foundational paper that introduced FROMAGe, some novel insights into its visual arithmetic capabilities have been shown. Although unable to perform the analogy resolution as expected, findings pertaining to the generation of text prior to image retrieval were promising. 
 * Evaluation of the impact of latent zero-shot in-context learning abilities of large language models (LLMs) on visual arithmetic.
