@@ -81,7 +81,7 @@ These templates are specifically chosen for their many-to-one association, exemp
 ### Extending Benchmark Possibilities: FROMAGe's Capability for Image Retrieval
 Although Tewel et al. (2022) show that their model is able to use text strings instead of visual input (by replacing images in the equations with strings), their benchmark is formulated as applying arithmetic operations to visual embeddings and then generating text based on that embedding. In other words, the benchmark was constructed to do equations in the form *image + (image - image) ~ text*.
 
-While FROMAGe models are capable of outputting images (by retrieving them from a database), the architecture of the ZeroCap model prevents it from outputting anything else than text. Based on this additional capability of FROMAGe models, we extend the benchmark and do not only generate text from the embeddings, but also retrieve images and evaluate how well they match the expected result. In other words, we also experiment with equations in the form *image + (image - image) ~ image*. 
+While  the FROMAGe model is capable of outputting images (by retrieving them from a database), the architecture of the ZeroCap model prevents it from outputting anything else than text. Based on this additional capability of FROMAGe, we extend the benchmark and do not only generate text from the embeddings, but also retrieve images and evaluate how well they match the expected result. In other words, we also experiment with equations in the form *image + (image - image) ~ image*. 
 
 ## Mapping, Generation, and Retrieval
 
