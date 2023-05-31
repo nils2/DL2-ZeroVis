@@ -1,7 +1,7 @@
 # Exploring Visual Grounding in FROMAGe using Visual Arithmetics
 
 <center>
-<img alt="FROMAGe model architecture" src="https://raw.githubusercontent.com/kohjingyu/fromage/main/teaser.png" width="90%">
+<img alt="FROMAGe model architecture" src="https://github.com/nils2/DL2-ZeroVis/blob/394af24706021418f17cff9910a91a6e34cbceb0/img/fromage-pipelines.png" width="90%">
 </center>
 
 This is the repository of Team 25 of UvA Deep Learning 2 course in 2023. Here we explore the visual arithmetic capabilities of FROMAGe (Grounding Language Models to Images for Multimodal Generation).
